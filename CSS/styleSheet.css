@@ -1,0 +1,104 @@
+:root{
+    --primary-color-Red : #e41212;
+    --primary-color-RedMixYellow : #ff8902;
+    --white:#e6dddd;
+    --black: #383737;
+
+}
+body{
+    background-image: url(../image/site_back.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+li:after {
+  content: "";
+  margin: auto;
+  display: block;
+  height: 4px;
+  width: 0%;
+  background-color: transparent;
+  transition: all 0.4s ease;
+}
+li:hover:after {
+  width: 100%;
+  background-color: var(--primary-color-Red);
+}
+
+
+.navOption,
+.nav-link {
+  font-weight: 600;
+  color:var(--white) !important;
+  font-size: 18px !important;
+}
+.text-danger-custom{
+    color: var(--primary-color-Red) !important;
+}
+.text-warning-custom{
+    color:var(--primary-color-RedMixYellow) !important;
+}
+
+.btn-outline-warning{
+    border-color: var(--primary-color-RedMixYellow) !important;
+
+}
+.btn-outline-warning:hover{
+    color:var(--white) !important;
+    background-color: var(--primary-color-RedMixYellow) !important;
+}
+
+.heading{
+
+    color: var(--white);
+    text-align: center;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 3s;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
