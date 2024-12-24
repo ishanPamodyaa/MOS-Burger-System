@@ -63,6 +63,7 @@ input[type="search"]::placeholder {
   align-items: center;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  cursor: pointer;
 }
 .tile p,
 .productName {
@@ -85,17 +86,50 @@ input[type="search"]::placeholder {
 }
 body .card{
 
-    background-color:   rgba(17, 17, 17, 0.096)!important;
+    background-color:   rgba(51, 51, 51, 0.096)!important;
     border: 1px solid var(--primary-color-RedMixYellow);   
+    box-shadow: 5px 5px 5px  rgba(233, 221, 221, 0.25);
 }
 
 .custom-card-col{
     display: flex;
     justify-content: center;
     align-items:center;
-}
+    }
+  .cardBody{
+
+    height: 165px;
+    display:  flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 
 .price{
 
     color:#ee9f54
+}
+.imgDiv{
+height: 125px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.imgDiv img{
+  aspect-ratio: 10/8;
+  object-fit: contain;
+}
+.nameDiv{
+  min-height:50px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.icon{
+  color: rgb(212, 203, 75)
+  ;
+  /* font-size: 40px; */
+  cursor: pointer;
 }
