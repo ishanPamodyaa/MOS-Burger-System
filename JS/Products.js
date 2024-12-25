@@ -64,7 +64,7 @@ function displayProductList(catogary) {
                             <p class="productName">${item.name}</p>
                         </div>
                         <div class="priceDiv" >
-                            <h5 class="price text-center fw-bold ">${item.price}</h5>
+                            <h5 class="price text-center fw-bold ">LKR ${item.price}</h5>
                         </div>
                         <div class="d-flex justify-content-sm-between flex-row ">
                             
@@ -80,3 +80,6 @@ function displayProductList(catogary) {
     dynamicProductTile.appendChild(productTile);
   });
 }
+
+
+
