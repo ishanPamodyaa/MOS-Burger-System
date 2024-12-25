@@ -1,6 +1,10 @@
-import { getProduct } from "./data.js";
+import {
+  fetchProducts,
+  addProduct,
+  removeProduct,
+} from "./productDataManage.js";
 
-const product = getProduct();
+const product = fetchProducts();
 console.log("Product data:", product);
 
 let selectedCatogary = "Burgers";
@@ -40,7 +44,7 @@ function displayProductList(catogary) {
 
   if (!selectedCatogary) return;
 
-  selectedCatogary.forEach((item) => {
+  selectedCatogary.forEach((item, index) => {
     const productTile = document.createElement("div");
     productTile.classList.add(
       "col",
@@ -68,9 +72,11 @@ function displayProductList(catogary) {
                         </div>
                         <div class="d-flex justify-content-sm-between flex-row ">
                             
-                            <i class="fa fa-pencil-square-o fa-2x icon" aria-hidden="true"></i>
-                            <i class="fa fa-trash-o fa-2x icon" aria-hidden="true"></i>
-                            <i class="fa fa-shopping-cart fa-2x icon" aria-hidden="true"></i>
+   
+                                <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
+                                <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
+                                <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
+                            </div>
 
                         </div>
                     </div>
@@ -79,7 +85,59 @@ function displayProductList(catogary) {
 
     dynamicProductTile.appendChild(productTile);
   });
+
+    document.querySelectorAll(".icon").forEach(icon => {
+        icon.addEventListener("click", (evt)=>{
+            const action = evt.target.dataset.action;
+            const index  = evt.target.dataset.index;
+
+            if(action == "edit"){
+                //
+            }else if (action == "delete"){
+                removeProduct(index, catogary);
+               displayProductList(catogary);
+            }else if (action == "shop"){
+                //
+            }    
+        });
+    });
+
 }
 
+document.getElementById("addProductForm").addEventListener("submit",)
+
+function addNewProduct() {
+
+const productCode = document.getElementById("itemCode").value;
+const productCatogery = document.getElementById("itemCategory").value;
+const productName = document.getElementById("itemName").value;
+const productPrice = document.getElementById("itemPrice").value;
+const productDiscount = document.getElementById("itemDiscount").value;
+const productImage = document.getElementById("itemImg").value;
+const productExpDate = document.getElementById("itemExpDate").value;      
+
+}
+
+let uploadedImage = "";
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      // Show the image preview
+      const imagePreview = document.getElementById("imagePreview");
+      imagePreview.src = e.target.result; // Set the image source to the uploaded file
+      imagePreview.style.display = "block"; // Make the image visible
+      // Store the image data for further use
+      uploadedImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  // Optionally log the uploaded image (Base64 string)
+  console.log(uploadedImage);
+}
+// Attach the preview function to the file input
+document.getElementById("itemImg").addEventListener("change", previewImage);
 
 

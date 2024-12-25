@@ -1,10 +1,12 @@
-let product = {
+let productData = {
   Burgers: [
     {
       itemCode: "B1001",
       name: "Classic Burger (Large)",
       price: 750.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Classic Burger (Large).png",
     },
     {
@@ -12,6 +14,8 @@ let product = {
       name: "Classic Burger (Regular)",
       price: 1500.0,
       discount: 15,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Classic Burger (Regular).png",
     },
     {
@@ -19,6 +23,9 @@ let product = {
       name: "Turkey Burger",
       price: 1600.0,
       discount: 0,
+      discount: 15,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Turkey Burger.png",
     },
     {
@@ -26,6 +33,8 @@ let product = {
       name: "Chicken Burger (Large) ",
       price: 1400.0,
       discount: 5,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Chicken Burger (Large).png",
     },
     {
@@ -33,6 +42,8 @@ let product = {
       name: "Chicken Burger (Regular)",
       price: 800.0,
       discount: 20,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Chicken Burger (Regular).jpg",
     },
     {
@@ -40,6 +51,8 @@ let product = {
       name: "Cheese Burger (Large)",
       price: 1000.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Cheese Burger (Large).png",
     },
     {
@@ -47,6 +60,8 @@ let product = {
       name: "Cheese Burger (Regular)",
       price: 600.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Cheese Burger (Regular).png",
     },
     {
@@ -54,6 +69,8 @@ let product = {
       name: "Bacon Burger",
       price: 650.0,
       discount: 15,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Bacon Burger.png",
     },
     {
@@ -61,6 +78,8 @@ let product = {
       name: "Shawarma Burger",
       price: 800.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Shawarma Burger.webp",
     },
     {
@@ -68,6 +87,8 @@ let product = {
       name: "Olive Burger",
       price: 1800.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Olive Burger.png",
     },
     {
@@ -75,6 +96,8 @@ let product = {
       name: "Double-Cheese Burger",
       price: 1250.0,
       discount: 20,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Double-Cheese Burger.png",
     },
     {
@@ -82,6 +105,8 @@ let product = {
       name: "Crispy Chicken Burger (Regular)",
       price: 1200.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Crispy Chicken Burger (Regular) .png",
     },
     {
@@ -89,6 +114,8 @@ let product = {
       name: "Crispy Chicken Burger (Large)",
       price: 1600.0,
       discount: 10,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Crispy Chicken Burger (Large) .png",
     },
     {
@@ -96,6 +123,8 @@ let product = {
       name: "Paneer Burger",
       price: 900.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Burger/Paneer Burger.png",
     },
   ],
@@ -105,6 +134,8 @@ let product = {
       name: "Crispy Chicken Submarine (Large)",
       price: 2000.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Crispy Chicken Submarine (Large).png",
     },
     {
@@ -112,6 +143,8 @@ let product = {
       name: "Crispy Chicken Submarine (Regular)",
       price: 1500.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Crispy Chicken Submarine (Regular).png",
     },
     {
@@ -119,6 +152,8 @@ let product = {
       name: "Chicken Submarine (Large) ",
       price: 1800.0,
       discount: 3,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Chicken Submarine (Large).png",
     },
     {
@@ -126,6 +161,8 @@ let product = {
       name: "Chicken Submarine (Regular) ",
       price: 1400.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Chicken Submarine (Regular).png",
     },
     {
@@ -133,6 +170,8 @@ let product = {
       name: "Grinder Submarine",
       price: 2300.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Grinder Submarine.png",
     },
     {
@@ -140,6 +179,8 @@ let product = {
       name: "Cheese Submarine ",
       price: 2200.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Cheese Submarine.png",
     },
     {
@@ -147,6 +188,8 @@ let product = {
       name: "Double Cheese n Chicken Submarine ",
       price: 1900.0,
       discount: 16,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Double Cheese n Chicken Submarine.png",
     },
     {
@@ -154,6 +197,8 @@ let product = {
       name: "Special Horgie Submarine",
       price: 2800.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/Special Horgie Submarine.png",
     },
     {
@@ -161,6 +206,8 @@ let product = {
       name: "MOS Special Submarine",
       price: 3000.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Submarines/MOS Special Submarine.png",
     },
   ],
@@ -170,6 +217,8 @@ let product = {
       name: "Steak Fries (Large)",
       price: 1200.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/Steak Fries (Large).png",
     },
     {
@@ -177,13 +226,16 @@ let product = {
       name: "Steak Fries (Medium)",
       price: 600.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/Steak Fries (Medium).png",
     },
     {
       itemCode: "B10027",
       name: "French Fries (Large)",
       price: 800.0,
-      discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/French Fries (Large).png",
     },
     {
@@ -191,6 +243,8 @@ let product = {
       name: "French Fries (Medium)",
       price: 650.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/French Fries (Medium).png",
     },
     {
@@ -198,6 +252,8 @@ let product = {
       name: "French Fries (Small)",
       price: 450.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/French Fries (Small).png",
     },
     {
@@ -205,6 +261,8 @@ let product = {
       name: "Sweet Potato Fries (Large)",
       price: 600.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Fries/Sweet Potato Fries (Large).png",
     },
   ],
@@ -214,6 +272,8 @@ let product = {
       name: "Chicken n Cheese Pasta",
       price: 1600.0,
       discount: 15,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Chicken n Cheese Pasta.png",
     },
     {
@@ -221,6 +281,8 @@ let product = {
       name: "Chicken Penne Pasta ",
       price: 1700.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Chicken Penne Pasta.png",
     },
     {
@@ -228,6 +290,8 @@ let product = {
       name: "Ground Turkey Pasta Bake",
       price: 2900.0,
       discount: 10,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Ground Turkey Pasta Bake.png",
     },
     {
@@ -235,6 +299,8 @@ let product = {
       name: "Creamy Shrimp Pasta ",
       price: 2000.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Creamy Shrimp Pasta.png",
     },
     {
@@ -242,6 +308,8 @@ let product = {
       name: "Lemon Butter Pasta",
       price: 1950.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Lemon Butter Pasta.png",
     },
     {
@@ -249,6 +317,8 @@ let product = {
       name: "Tagliatelle Pasta",
       price: 2400.0,
       discount: 1,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Tagliatelle Pasta.png",
     },
     {
@@ -256,6 +326,8 @@ let product = {
       name: "Baked Ravioli",
       price: 2000.0,
       discount: 1,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Pasta/Baked Ravioli .png",
     },
   ],
@@ -266,6 +338,8 @@ let product = {
       name: "Fried Chicken (Small)",
       price: 1200.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/Fried Chicken (Small).webp",
     },
     {
@@ -273,6 +347,8 @@ let product = {
       name: "Fried Chicken (Regular)",
       price: 2300.0,
       discount: 10,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/Fried Chicken (Regular) .png",
     },
     {
@@ -280,6 +356,8 @@ let product = {
       name: "Fried Chicken (Large)",
       price: 3100.0,
       discount: 5,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/Fried Chicken (Large).png",
     },
     {
@@ -287,6 +365,8 @@ let product = {
       name: "Hot Wings (Large) ",
       price: 2400.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/Hot Wings (Large) .png",
     },
     {
@@ -294,6 +374,8 @@ let product = {
       name: "Devilled Chicken (Large)",
       price: 900.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/Devilled Chicken (Large).png",
     },
     {
@@ -301,6 +383,8 @@ let product = {
       name: "BBQ Chicken (Regular)",
       price: 2100.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Chicken/BBQ Chicken (Regular).png",
     },
   ],
@@ -310,6 +394,8 @@ let product = {
       name: "Pepsi (330ml)",
       price: 990.0,
       discount: 5,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Beverages/Pepsi (330ml).png",
     },
     {
@@ -317,6 +403,8 @@ let product = {
       name: "Coca-Cola (330ml)",
       price: 1230.0,
       discount: 0,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Beverages/Coca-Cola (330ml).png",
     },
     {
@@ -324,6 +412,8 @@ let product = {
       name: "Sprite (330ml)",
       price: 1500.0,
       discount: 3,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Beverages/Sprite (330ml) .png",
     },
     {
@@ -331,15 +421,40 @@ let product = {
       name: "Mirinda (330ml)",
       price: 850.0,
       discount: 7,
+      quantity :1,
+      expiryDate: "2023-12-31",
       img: "../image/product/Beverages/Mirinda (330ml).png",
     },
   ],
 };
 
 
-
-function getProduct(){
-    return product;
-}
-
-export { getProduct };
+export function fetchProducts() {
+    readProductsFromStorage();
+    return productData;
+ }
+ 
+ function readProductsFromStorage() {
+     const productJSON = localStorage.getItem("product");
+     if (productJSON) {
+         return JSON.parse(productJSON);
+     }
+     return productData;
+ }
+ 
+ export function addProduct(productObj, category) {
+     productData[category].push(productObj);
+     saveProductsToStorage();
+     console.log(productData[category]);  
+ }
+ 
+ export function removeProduct(index, category) {
+     productData[category].splice(index, 1);
+     saveProductsToStorage();
+     console.log(productData[category]);  
+ }
+ 
+ function saveProductsToStorage() {
+     localStorage.setItem("productData", JSON.stringify(productData));
+ }
+ 
