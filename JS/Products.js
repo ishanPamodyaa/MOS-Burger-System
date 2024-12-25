@@ -4,6 +4,8 @@ import {
   removeProduct,
 } from "./productDataManage.js";
 
+
+let uploadedImage = "";
 const product = fetchProducts();
 console.log("Product data:", product);
 
@@ -104,21 +106,50 @@ function displayProductList(catogary) {
 
 }
 
-document.getElementById("addProductForm").addEventListener("submit",)
+document.getElementById("addProductForm").addEventListener("submit",function (event) {
+event.preventDefault();
+addNewProduct();    
+});
 
 function addNewProduct() {
 
 const productCode = document.getElementById("itemCode").value;
-const productCatogery = document.getElementById("itemCategory").value;
+const cat = document.getElementById("itemCategory");
+const productCatogery = cat.options[cat.selectedIndex].text;
 const productName = document.getElementById("itemName").value;
-const productPrice = document.getElementById("itemPrice").value;
-const productDiscount = document.getElementById("itemDiscount").value;
-const productImage = document.getElementById("itemImg").value;
-const productExpDate = document.getElementById("itemExpDate").value;      
+const productPrice = parseFloat(document.getElementById("itemPrice").value)|| 0;
+const productDiscount = parseFloat(document.getElementById("itemDiscount").value)|| 0;
+const productQty = parseFloat(document.getElementById("itemQty").value)||0;
+const productExpDate = document.getElementById("itemExpDate").value;
+
+for(let i = 0; i< product[productCatogery].length; i++){
+
+    if(product[productCatogery][i].itemCode == productCode){
+        removeProduct(i,productCatogery);
+    }
+}
+
+const newProduct = {
+
+    itemCode: productCode,
+      name: productName,
+      price: productPrice,
+      discount: productDiscount,
+      quantity : productQty,
+      expiryDate: productExpDate,
+      img: uploadedImage,
+};
+
+if (!product[productCatogery]) {
+    product[productCatogery] = [];
+  }
+  
+addProduct(newProduct,productCatogery);
+console.log(newProduct);
 
 }
 
-let uploadedImage = "";
+
 
 function previewImage(event) {
   const file = event.target.files[0];
