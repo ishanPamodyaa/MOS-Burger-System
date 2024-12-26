@@ -41,6 +41,8 @@ document
 
 function displayProductList(catogary) {
   const selectedCatogary = product[catogary];
+  console.log("Selected catogary:", selectedCatogary);
+  
   const dynamicProductTile = document.getElementById("productTile");
   dynamicProductTile.innerHTML = "";
 
@@ -94,7 +96,8 @@ function displayProductList(catogary) {
             const index  = evt.target.dataset.index;
 
             if(action == "edit"){
-                //
+              editProduct(index, catogary);
+              console.log("Selected catogary edit: en 1 ", catogary);
             }else if (action == "delete"){
                 removeProduct(index, catogary);
                displayProductList(catogary);
@@ -143,8 +146,9 @@ const newProduct = {
 if (!product[productCatogery]) {
     product[productCatogery] = [];
   }
-  
-addProduct(newProduct,productCatogery);
+  selectedCatogary = productCatogery;
+addProduct(newProduct,selectedCatogary);
+updateProduct(newProduct, product[selectedCatogary].length-1);  
 console.log(newProduct);
 
 }
@@ -172,3 +176,106 @@ function previewImage(event) {
 document.getElementById("itemImg").addEventListener("change", previewImage);
 
 
+function updateProduct(newProduct , index){
+
+  const dynamicProductTile = document.getElementById("productTile");
+  
+  
+    const productTile = document.createElement("div");
+    productTile.classList.add(
+      "col",
+      "col-sm",
+      "col-md-4",
+      "col-lg-3",
+      "col-xl-2",
+      "mt-3",
+      "custom-card-col"
+    );
+
+    productTile.innerHTML = `
+
+            <div class="card card-custom">
+                    <div class="imgDiv">
+                        <img src="${newProduct.img}" class="card-img-top"
+                            alt="${newProduct.name}" cap">
+                    </div>
+                    <div class="card-body cardBody">
+                        <div class="nameDiv">
+                            <p class="productName">${newProduct.name}</p>
+                        </div>
+                        <div class="priceDiv" >
+                            <h5 class="price text-center fw-bold ">LKR ${newProduct.price}</h5>
+                        </div>
+                        <div class="d-flex justify-content-sm-between flex-row ">
+                            
+   
+                                <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
+                                <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
+                                <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+    `;
+
+    dynamicProductTile.appendChild(productTile);
+  
+
+    document.querySelectorAll(".icon").forEach(icon => {
+        icon.addEventListener("click", (evt)=>{
+            const action = evt.target.dataset.action;
+            const index  = evt.target.dataset.index;
+
+            if(action == "edit"){
+                editProduct(index , catogary);
+            }else if (action == "delete"){
+                removeProduct(index, catogary);
+               displayProductList(catogary);
+            }else if (action == "shop"){
+                //
+            }    
+        });
+    });
+
+}
+function editProduct(index , catogary) {
+  // Ensure category is selected and product array exists
+  if (!product[catogary]) {
+    console.error("Category or product data is not defined");
+    return;
+  }
+
+  const productToEdit = product[catogary][index];
+
+  if (!productToEdit) {
+    console.error("Invalid product index:", index);
+    return;
+  }
+
+  // Populate form fields with the selected product's data
+  document.getElementById("itemCode").value = productToEdit.itemCode;
+  document.getElementById("itemName").value = productToEdit.name;
+  document.getElementById("itemPrice").value = productToEdit.price;
+  document.getElementById("itemDiscount").value = productToEdit.discount;
+  document.getElementById("itemQty").value = productToEdit.quantity;
+  document.getElementById("itemExpDate").value = productToEdit.expiryDate;
+  document.getElementById("imagePreview").src = productToEdit.img;
+  document.getElementById("imagePreview").style.display = "block";
+  
+  console.log("Selected catogary at eit prod before: ", selectedCatogary , catogary);
+  
+  document.getElementById("itemCategory").value = catogary;
+ 
+  console.log("Selected catogary at eit prod: ", selectedCatogary ,catogary);
+  const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+  myModal.show();
+  console.log("Editing product:", productToEdit);
+
+
+}
+console.log(index, selectedCatogary, product[selectedCatogary]);
+console.log("Edit icon clicked:", evt.target.dataset.index);
+console.log(product);
+console.log(product[selectedCatogary]);
+console.log(document.getElementById("itemCode"));
