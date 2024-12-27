@@ -1,19 +1,13 @@
 import {
-  fetchProducts,
-  addProduct,
-  removeProduct,
-} from "./productDataManage.js";
-
+    fetchProducts,
+    addProduct,
+    removeProduct,
+  } from "./productDataManage.js";
+  
 let uploadedImage = "";
 const product = fetchProducts();
 console.log("Product data:", product);
 
-let selectedCatogary = "Burgers";
-
-window.onload = function () {
- 
-  displayProductList(selectedCatogary);
-};
 
 
 
@@ -47,12 +41,16 @@ document
   .addEventListener("click", displayProductList.bind(null, "Beverages"));
 
 
+  let selectedCatogary = "Burgers";
 
 
-
+  window.onload = function () {
  
+    displayProductList(selectedCatogary);
+  };
+  
+
 function displayProductList(catogary) {
-console.log("display ekata awa");
 
   selectedCatogary = catogary;
 
@@ -74,12 +72,14 @@ console.log("display ekata awa");
       "col-lg-3",
       "col-xl-2",
       "mt-3",
-      "custom-card-col"
+      "custom-card-col",
+      // "productCardCust"
     );
-
+    // productTile.setAttribute("data-index", index);
+   
     productTile.innerHTML = `
 
-            <div class="card card-custom"  >
+            <div class="card card-custom productCardCust" data-index="${index}"  >
                     <div class="imgDiv">
                         <img src="${item.img}" class="card-img-top"
                             alt="${item.name}" cap">
@@ -98,15 +98,29 @@ console.log("display ekata awa");
                                 <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
                                 <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
                             </div>
-
+                           <div class="dateDiv pt-2" data-index="${index}">
+                                <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
     `;
 
+
     dynamicProductTile.appendChild(productTile);
   });
+  const dataDives = document.querySelectorAll('.dateDiv');
+  const currentDate = new Date();
+  dataDives.forEach(div => {
+    const pElement = div.querySelector('p');
+    const expDate = new Date(pElement.textContent.trim());
 
+    if (expDate < currentDate) {
+      pElement.classList.add('expired');
+  }else{
+    pElement.classList.add('not-expired');
+  }
+});
 
 
   document.querySelectorAll(".icon").forEach((icon) => {
@@ -149,8 +163,6 @@ function addNewProduct() {
     if (product[productCatogery][i].itemCode === productCode) {
       // console.log("ADD NEW", productCode, product[productCatogery][i].itemCode);
       removeProduct(i, productCatogery);
-      console.log("add new eka athule product eka remive karala iwrai" , selectedCatogary);
-      
       displayProductList(selectedCatogary);
     }
   }
@@ -177,11 +189,9 @@ function addNewProduct() {
     product[selectedCatogary].length - 1,
     selectedCatogary
   );
-  console.log("update eken eliye");
-  
-displayProductList(selectedCatogary);
 
-  console.log(newProduct);
+
+  // console.log(newProduct);
 }
 
 
@@ -202,9 +212,9 @@ function previewImage(event) {
 }
 document.getElementById("itemImg").addEventListener("change", previewImage);
 
-function updateProduct(newProduct,index, catogary) {
+function updateProduct(newProduct, index, catogary) {
   const dynamicProductTile = document.getElementById("productTile");
-  console.log("update eka atule",index, catogary);
+  console.log(index, catogary);
 
   const productTile = document.createElement("div");
   productTile.classList.add(
@@ -216,44 +226,55 @@ function updateProduct(newProduct,index, catogary) {
     "mt-3",
     "custom-card-col"
   );
-console.log("point 0");
 
-productTile.innerHTML = `
-
-<div class="card card-custom"  >
-        <div class="imgDiv">
-            <img src="${newProduct.img}" class="card-img-top"
-                alt="${newProduct.name}" cap">
-        </div>
-        <div class="card-body cardBody">
-            <div class="nameDiv">
-                <p class="productName">${newProduct.name}</p>
-            </div>
-            <div class="priceDiv" >
-                <h5 class="price text-center fw-bold ">LKR ${newProduct.price}</h5>
-            </div>
-            <div class="d-flex justify-content-sm-between flex-row ">
-                
-
-                    <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
-                    <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
-                    <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
+  productTile.innerHTML = `
+               <div class="card card-custom productCardCust" data-index="${index}"  >
+                    <div class="imgDiv">
+                        <img src="${newProduct.img}" class="card-img-top"
+                            alt="${newProduct.name}" cap">
+                    </div>
+                    <div class="card-body cardBody">
+                        <div class="nameDiv">
+                            <p class="productName">${newProduct.name}</p>
+                        </div>
+                        <div class="priceDiv" >
+                            <h5 class="price text-center fw-bold ">LKR ${newProduct.price}</h5>
+                        </div>
+                        <div class="d-flex justify-content-sm-between flex-row ">
+                            
+   
+                                <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
+                                <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
+                                <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
+                            </div>
+                           <div class="dateDiv pt-2" data-index="${index}">
+                                <p class="text-center fw-bold mb-0">${newProduct.expiryDate}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+    `;
 
-            </div>
-        </div>
-    </div>
-`;
+    const dataDives = document.querySelectorAll('.dateDiv');
+    const currentDate = new Date();
+    // dataDives.forEach(div => {
+      const pElement = div.querySelector('p');
+      const expDate = new Date(pElement.textContent.trim());
+
+      if (expDate < currentDate) {
+        pElement.classList.add('expired');
+    }else{
+      pElement.classList.add('not-expired');
+    }
+
+ 
 
   // Attach event listeners to the new icons
-  console.log("methana p1");
-  
   const editIcon = productTile.querySelector(".fa-pencil-square-o");
   const deleteIcon = productTile.querySelector(".fa-trash-o");
   const shopIcon = productTile.querySelector(".fa-shopping-cart");
 
 
-  console.log("methana p2");
 
   editIcon.addEventListener("click", (evt) => {
     editProduct(index, catogary);
@@ -269,12 +290,9 @@ productTile.innerHTML = `
     // console.log("Shop action triggered for index:", index);
     // Implement shop functionality
   });
-  console.log("methana p3");
 
   // Append the product tile to the DOM
   dynamicProductTile.appendChild(productTile);
-  console.log("methana p4");
-
 }
 
 function editProduct(index, catogary) {
@@ -311,4 +329,4 @@ function editProduct(index, catogary) {
   myModal.show();
 }
 
-// document.getElementById("burgers").addEventListener("click", checkExp());
+

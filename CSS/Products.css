@@ -170,3 +170,19 @@ color: var(--white) !important;
 .modal{
   background-color: #0a0a0a65;
 }
+
+ 
+
+.expired {
+
+  border-radius: 5px;
+  background-color: rgb(240, 7, 7);
+  color: white;
+}
+
+
+.not-expired {
+  border-radius: 5px;
+  background-color: rgb(60, 192, 60);
+  color: white;
+}
