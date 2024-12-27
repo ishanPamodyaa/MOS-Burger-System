@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Increment Customer ID</title>
+    <style>
+        .btn { margin: 5px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="inputField mb-3">
+        <label class="mb-2 fw-bold fs-7" for="customerId">Customer ID</label>
+        <input id="customerId" class="form-control" type="text" readonly value="C0001">
+    </div>
+
+    <button class="btn" id="addCustomerBtn">Add Customer</button>
+    <button class="btn" id="cancelBtn">Cancel</button>
+    <button class="btn" id="publishBtn">Publish</button>
+
+    <script>
+        // Variables to manage ID state
+        let currentNumber = 1; // Starting number
+        let isTemporary = false; // Track if ID is temporarily incremented
+
+        // Update the Customer ID readonly input
+        function updateCustomerId() {
+            const customerIdField = document.getElementById("customerId");
+            const formattedNumber = String(currentNumber).padStart(4, "0"); // Format as 0001
+            customerIdField.value = `C${formattedNumber}`; // Update with prefix
+        }
+
+        // Add Customer button logic
+        document.getElementById("addCustomerBtn").addEventListener("click", () => {
+            if (!isTemporary) {
+                currentNumber++; // Increment number
+                updateCustomerId();
+                isTemporary = true; // Mark as temporary
+            }
+        });
+
+        // Cancel button logic
+        document.getElementById("cancelBtn").addEventListener("click", () => {
+            if (isTemporary) {
+                currentNumber--; // Decrement number
+                updateCustomerId();
+                isTemporary = false; // Reset temporary state
+            }
+        });
+
+        // Publish button logic
+        document.getElementById("publishBtn").addEventListener("click", () => {
+            if (isTemporary) {
+                isTemporary = false; // Finalize ID
+                alert("Customer ID saved: " + document.getElementById("customerId").value);
+            }
+        });
+
+        // Initialize Customer ID on page load
+        // updateCustomerId();
+    </script>
+</body>
+</html>
