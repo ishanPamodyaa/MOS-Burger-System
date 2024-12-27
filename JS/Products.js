@@ -11,12 +11,8 @@ console.log("Product data:", product);
 let selectedCatogary = "Burgers";
 
 window.onload = function () {
- 
   displayProductList(selectedCatogary);
 };
-
-
-
 
 
 
@@ -48,16 +44,13 @@ document
 
 
 
-
-
- 
 function displayProductList(catogary) {
-console.log("display ekata awa");
+  console.log("display ekata awa");
 
   selectedCatogary = catogary;
 
   console.log("Selected catogary:", selectedCatogary, catogary);
-  
+
   // const selectedCatogarye = product[catogary];
 
   const dynamicProductTile = document.getElementById("productTile");
@@ -98,7 +91,9 @@ console.log("display ekata awa");
                                 <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
                                 <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
                             </div>
-
+                        <div class="dateDiv pt-2" data-index="${index}">
+                                <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,7 +102,18 @@ console.log("display ekata awa");
     dynamicProductTile.appendChild(productTile);
   });
 
+  const dataDives = document.querySelectorAll(".dateDiv");
+  const currentDate = new Date();
+  dataDives.forEach((div) => {
+    const pElement = div.querySelector("p");
+    const expDate = new Date(pElement.textContent.trim());
 
+    if (expDate < currentDate) {
+      pElement.classList.add("expired");
+    } else {
+      pElement.classList.add("not-expired");
+    }
+  });
 
   document.querySelectorAll(".icon").forEach((icon) => {
     icon.addEventListener("click", (evt) => {
@@ -149,8 +155,11 @@ function addNewProduct() {
     if (product[productCatogery][i].itemCode === productCode) {
       // console.log("ADD NEW", productCode, product[productCatogery][i].itemCode);
       removeProduct(i, productCatogery);
-      console.log("add new eka athule product eka remive karala iwrai" , selectedCatogary);
-      
+      console.log(
+        "add new eka athule product eka remive karala iwrai",
+        selectedCatogary
+      );
+
       displayProductList(selectedCatogary);
     }
   }
@@ -164,13 +173,14 @@ function addNewProduct() {
     expiryDate: productExpDate,
     img: uploadedImage,
   };
+  console.log("sasasasasa", uploadedImage);
 
   if (!product[productCatogery]) {
     product[productCatogery] = [];
   }
 
   selectedCatogary = productCatogery;
-  
+
   addProduct(newProduct, selectedCatogary);
   updateProduct(
     newProduct,
@@ -178,16 +188,16 @@ function addNewProduct() {
     selectedCatogary
   );
   console.log("update eken eliye");
-  
-displayProductList(selectedCatogary);
 
-  console.log(newProduct);
+  displayProductList(selectedCatogary);
+
+  console.log("lsllsls ", newProduct);
 }
-
-
 
 function previewImage(event) {
   const file = event.target.files[0];
+  console.log("file ekaaaa", file);
+
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -195,6 +205,10 @@ function previewImage(event) {
       imagePreview.src = e.target.result;
       imagePreview.style.display = "block";
       uploadedImage = e.target.result;
+      console.log("e.target.result;",e.target.result);
+      console.log("uploadedImage", uploadedImage);
+      
+      
     };
     reader.readAsDataURL(file);
   }
@@ -202,9 +216,9 @@ function previewImage(event) {
 }
 document.getElementById("itemImg").addEventListener("change", previewImage);
 
-function updateProduct(newProduct,index, catogary) {
+function updateProduct(newProduct, index, catogary) {
   const dynamicProductTile = document.getElementById("productTile");
-  console.log("update eka atule",index, catogary);
+  console.log("update eka atule", index, catogary);
 
   const productTile = document.createElement("div");
   productTile.classList.add(
@@ -216,9 +230,9 @@ function updateProduct(newProduct,index, catogary) {
     "mt-3",
     "custom-card-col"
   );
-console.log("point 0");
+  console.log("img seen", newProduct.img);
 
-productTile.innerHTML = `
+  productTile.innerHTML = `
 
 <div class="card card-custom"  >
         <div class="imgDiv">
@@ -247,17 +261,18 @@ productTile.innerHTML = `
 
   // Attach event listeners to the new icons
   console.log("methana p1");
-  
+
   const editIcon = productTile.querySelector(".fa-pencil-square-o");
   const deleteIcon = productTile.querySelector(".fa-trash-o");
   const shopIcon = productTile.querySelector(".fa-shopping-cart");
-
 
   console.log("methana p2");
 
   editIcon.addEventListener("click", (evt) => {
     editProduct(index, catogary);
-    // console.log("Edit action triggered for index:", index);
+    console.log("Edit eken passe");
+    
+  
   });
 
   deleteIcon.addEventListener("click", (evt) => {
@@ -274,7 +289,6 @@ productTile.innerHTML = `
   // Append the product tile to the DOM
   dynamicProductTile.appendChild(productTile);
   console.log("methana p4");
-
 }
 
 function editProduct(index, catogary) {
@@ -292,7 +306,10 @@ function editProduct(index, catogary) {
     console.error("Invalid product index:", index);
     return;
   }
+  console.log("image eekaa ", productToEdit.img);
 
+
+ 
   // Populate form fields with the selected product's data
   document.getElementById("itemCode").value = productToEdit.itemCode;
   document.getElementById("itemName").value = productToEdit.name;
@@ -303,12 +320,11 @@ function editProduct(index, catogary) {
 
   document.getElementById("imagePreview").src = productToEdit.img;
   document.getElementById("imagePreview").style.display = "block";
+  
 
- 
+  
   document.getElementById("itemCategory").value = catogary;
-
+  console.log("imageeeee", uploadedImage);
   const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
   myModal.show();
 }
-
-// document.getElementById("burgers").addEventListener("click", checkExp());

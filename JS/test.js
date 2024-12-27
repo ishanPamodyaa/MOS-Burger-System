@@ -330,3 +330,160 @@ function editProduct(index, catogary) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+ // const imgFilePath =  productToEdit.img;
+  // document.getElementById("imagePreview").src =imgFilePath;
+  // document.getElementById("imagePreview").style.display = "block";
+  // const filePath = imgFilePath;
+  
+  // const fileName = imgFilePath.split('/').pop(); // Extracts 'Paneer Burger.png'
+  
+  // console.log("file name" , fileName);
+
+  // document.getElementById("itemImg").setAttribute("data-filename", fileName); // For reference
+// document.getElementById("filenameField").value = fileName; // Display it in another input field
+
+// document.getElementById("itemImg").value=fileName;
+ 
+
+
+function editProduct(index, catogary) {
+    // Ensure category is selected and product array exists
+    console.log("edit product ", index, catogary);
+  
+    if (!product[catogary]) {
+      console.error("Category or product data is not defined");
+      return;
+    }
+  
+    const productToEdit = product[catogary][index];
+  
+    if (!productToEdit) {
+      console.error("Invalid product index:", index);
+      return;
+    }
+    console.log("image eekaa ", productToEdit.img);
+  
+  
+   
+    // Populate form fields with the selected product's data
+    document.getElementById("itemCode").value = productToEdit.itemCode;
+    document.getElementById("itemName").value = productToEdit.name;
+    document.getElementById("itemPrice").value = productToEdit.price;
+    document.getElementById("itemDiscount").value = productToEdit.discount;
+    document.getElementById("itemQty").value = productToEdit.quantity;
+    document.getElementById("itemExpDate").value = productToEdit.expiryDate;
+  
+    document.getElementById("imagePreview").src = productToEdit.img;
+    document.getElementById("imagePreview").style.display = "block";
+    
+    fetchImageAsBase64(productToEdit.img).then((base64String) => {
+        // After the Base64 conversion, log the result
+        console.log("Converted Base64 String:", base64String);
+        uploadedImage = base64String;
+        console.log("imageeeee 1 ", uploadedImage);
+      });
+    
+  
+    document.getElementById("itemCategory").value = catogary;
+    console.log("imageeeee", uploadedImage);
+    const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+    myModal.show();
+  }
+  
+  
+  async function fetchImageAsBase64(imagePath) {
+  
+    console.log("fetch ekat awa");
+    
+      const response = await fetch(imagePath); // Fetch the file from the server
+      const blob = await response.blob(); // Convert it to a Blob object
+      const reader = new FileReader();
+  
+      return new Promise((resolve, reject) => {
+        reader.onloadend = function () {
+          const base64String = reader.result; // Base64-encoded string
+          resolve(base64String); // Resolve the promise with the base64 string
+        };
+        reader.onerror = function (error) {
+          reject(error); // Reject if there's an error during reading
+        };
+        reader.readAsDataURL(blob); // Read the Blob as Base64
+      });
+    
+  }
+  
+async function editProduct(index, catogary) {
+    // Ensure category is selected and product array exists
+    console.log("edit product ", index, catogary);
+  
+    if (!product[catogary]) {
+      console.error("Category or product data is not defined");
+      return;
+    }
+  
+    const productToEdit = product[catogary][index];
+  
+    if (!productToEdit) {
+      console.error("Invalid product index:", index);
+      return;
+    }
+    console.log("image eekaa ", productToEdit.img);
+  
+    // Populate form fields with the selected product's data
+    document.getElementById("itemCode").value = productToEdit.itemCode;
+    document.getElementById("itemName").value = productToEdit.name;
+    document.getElementById("itemPrice").value = productToEdit.price;
+    document.getElementById("itemDiscount").value = productToEdit.discount;
+    document.getElementById("itemQty").value = productToEdit.quantity;
+    document.getElementById("itemExpDate").value = productToEdit.expiryDate;
+  
+    document.getElementById("imagePreview").src = productToEdit.img;
+    document.getElementById("imagePreview").style.display = "block";
+  
+    // Fetch the image as Base64 using async/await
+    uploadedImage = await fetchImageAsBase64(productToEdit.img);  // Wait for the Base64 conversion to finish
+    console.log("imageeeee 1", uploadedImage);  // This will log the Base64 image string
+  
+    // Now you can safely log the value of uploadedImage
+    console.log("imageeeee", uploadedImage);  // This will also log after it's been updated
+  
+    document.getElementById("itemCategory").value = catogary;
+  
+    const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+    myModal.show();
+    console.log("edit eke antima" , uploadedImage);
+    
+  }
+  
+  async function fetchImageAsBase64(imagePath) {
+    console.log("fetch ekat awa");
+  
+    const response = await fetch(imagePath); // Fetch the file from the server
+    const blob = await response.blob(); // Convert it to a Blob object
+    const reader = new FileReader();
+  
+    return new Promise((resolve, reject) => {
+      reader.onloadend = function () {
+        const base64String = reader.result; // Base64-encoded string
+        resolve(base64String); // Resolve the promise with the base64 string
+      };
+      reader.onerror = function (error) {
+        reject(error); // Reject if there's an error during reading
+      };
+      reader.readAsDataURL(blob); // Read the Blob as Base64
+    });
+    
+   
+   
+  } 
+  
