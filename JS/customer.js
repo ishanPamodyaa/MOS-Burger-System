@@ -1,3 +1,9 @@
+import {
+  fetchCustomers,
+  addCustomer,
+  removeCustomer,
+} from "./customerMange.js";
+
 let currentNumber = 0;
 let isOpenCustomerAddForm = false;
 //id increment
@@ -32,8 +38,6 @@ document.getElementById("publishBtn").addEventListener("click", () => {
     console.log("func atule publish", currentNumber);
   }
 });
-
-
 
 const gender = document.getElementById("Gender");
 gender.addEventListener("change", () => {
