@@ -70,6 +70,7 @@
     margin-bottom: 0rem;
     color: var(--white);
     text-align: center;
+    font-weight: 600;
     /* font-size: small; */
   }
   
@@ -98,10 +99,12 @@
       }
     .cardBody{
   
-      height: 165px;
+      height: 150px;
       display:  flex;
       flex-direction: column;
       justify-content: flex-end;
+      /* padding-top: 0px !important;  */
+      padding-bottom: 3px !important;
     }
   
   .price{
@@ -109,7 +112,7 @@
       color:#ee9f54
   }
   .imgDiv{
-  height: 125px;
+  height: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
