@@ -156,10 +156,11 @@ const addCartToHtml = (catogary, index) => {
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
       totalQty += item.quantity;
-      let produuctItem = product[selectedCatogary][index];
+      let produuctItem = product[selectedCatogary][index]; // Access product by index in cartData
       const cartItem = document.createElement("div");
       cartItem.classList.add(
-        "d-flex", "flex-row",
+        "d-flex",
+        "flex-row",
         "justify-content-between",
         "p-1",
         "align-items-center",
@@ -169,36 +170,39 @@ const addCartToHtml = (catogary, index) => {
         "custom-boarder"
       );
       cartItem.innerHTML = `
-                                           <div class="" style="width: 5%;">
-                                                                    <p class="mb-0 text-light">1</p>
-                                                                </div>
-                                                                <div class="" style="width: 15%;">
-                                                                    <img src="https://themesbox.in/admin-templates/olian/html/light-vertical/assets/images/ecommerce/product_01.svg"
-                                                                        class="img-fluid" width="45" alt="product">
-                                                                </div>
-                                                                <div class="" style="width: 25%;">
-                                                                    <p class="mb-0 text-light">${produuctItem.name}</p>
-                                                                </div>
-                                                                <div class="" style="width: 20%;">
-                                                                    <div class="d-block text-light">
-                                                                        <div class="w-100">
-                                                                            <p class="mb-0">LKR 10</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="" style="width: 15%;">
-                                                                    <div class="form-group">
-                                                                        <input type="number" class="form-control"
-                                                                            name="cartQty1" id="cartQty1" value="1">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="" style="width: 5%;">
-                                                                    <a href="#" class="text-danger"><i
-                                                                            class="ri-delete-bin-2-line"></i></a>
-                                                                </div>
-
-      
-      `;
+          <div class="" style="width: 5%;">
+            <p class="mb-0 text-light">1</p>
+          </div>
+          <div class="" style="width: 15%;">
+            <img src="${
+              produuctItem.img
+            }" class="img-fluid" width="45" alt="product">
+          </div>
+          <div class="" style="width: 25%;">
+            <p class="mb-0 text-light">${produuctItem.name}</p>
+          </div>
+          <div class="" style="width: 20%;">
+            <div class="d-block text-light">
+              <div class="w-100">
+                <p class="mb-0">LKR ${
+                  (produuctItem.price -
+                    (produuctItem.price * produuctItem.discount) / 100) *
+                  item.quantity
+                }</p>
+              </div>
+            </div>
+          </div>
+          <div class="" style="width: 15%;">
+            <div class="form-group">
+              <input type="number" class="form-control" name="cartQty${index}" id="cartQty${index}" value="${
+        item.quantity
+      }">
+            </div>
+          </div>
+          <div class="" style="width: 5%;">
+            <a href="#" class="text-danger"><i class="ri-delete-bin-2-line"></i></a>
+          </div>
+        `;
       dynamicCartItem.appendChild(cartItem);
     });
   }
