@@ -428,32 +428,70 @@ let productData = {
   ],
 };
 
+// export function fetchProducts() {
+//   readProductsFromStorage();
+//   return productData;
+// }
+
+// function readProductsFromStorage() {
+//   const productJSON = localStorage.getItem("product");
+//   if (productJSON) {
+//     return JSON.parse(productJSON);
+//   }
+//   return productData;
+// }
+
+// export function addProduct(productObj, category) {
+//   productData[category].push(productObj);
+//   saveProductsToStorage();
+//   console.log(productData[category]);
+// }
+
+// export function removeProduct(index, category) {
+//   console.log("remove ekata awa", index, category);
+//   productData[category].splice(index, 1);
+//   saveProductsToStorage();
+//   console.log(productData[category]);
+// }
+
+// function saveProductsToStorage() {
+//   localStorage.setItem("productData", JSON.stringify(productData));
+// }
+
+const STORAGE_KEY = "productData"; // Define a constant for the key
+
 export function fetchProducts() {
-  readProductsFromStorage();
-  return productData;
+  return readProductsFromStorage();
 }
 
 function readProductsFromStorage() {
-  const productJSON = localStorage.getItem("product");
+  const productJSON = localStorage.getItem(STORAGE_KEY);
   if (productJSON) {
-    return JSON.parse(productJSON);
+    return JSON.parse(productJSON); // Parse and return saved data
   }
-  return productData;
+  return {}; // Return an empty object if no data exists
 }
 
 export function addProduct(productObj, category) {
+  const productData = fetchProducts(); // Ensure data is always read from storage
+  if (!productData[category]) {
+    productData[category] = []; // Initialize category if not present
+  }
   productData[category].push(productObj);
-  saveProductsToStorage();
+  saveProductsToStorage(productData);
   console.log(productData[category]);
 }
 
 export function removeProduct(index, category) {
+  const productData = fetchProducts(); // Always fetch fresh data
   console.log("remove ekata awa", index, category);
-  productData[category].splice(index, 1);
-  saveProductsToStorage();
-  console.log(productData[category]);
+  if (productData[category]) {
+    productData[category].splice(index, 1);
+    saveProductsToStorage(productData);
+    console.log(productData[category]);
+  }
 }
 
-function saveProductsToStorage() {
-  localStorage.setItem("productData", JSON.stringify(productData));
+function saveProductsToStorage(productData) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(productData));
 }

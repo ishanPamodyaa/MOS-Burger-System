@@ -5,9 +5,11 @@
   --black: #383737;
 }
 body {
-  background-image: url(../image/site_back.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.664), rgba(0, 0, 0, 0.5)), 
+              url(../image/site_back.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center; /* Ensures the image is centered */
 }
 
 li:after {

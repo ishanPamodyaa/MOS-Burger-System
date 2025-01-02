@@ -1,63 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Increment Customer ID</title>
-    <style>
-        .btn { margin: 5px; padding: 10px; cursor: pointer; }
-    </style>
+    <title>MOS Burgers</title>
+    <link href="../CSS/Products.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <div class="inputField mb-3">
-        <label class="mb-2 fw-bold fs-7" for="customerId">Customer ID</label>
-        <input id="customerId" class="form-control" type="text" readonly value="C0001">
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/"
+                class="d-flex align-items-center mb-lg-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+
+                <span class="fs-1 text-danger-custom fw-bold">MOS <span
+                        class="text-warning-custom">Burgers</span></span>
+            </a>
+
+            <ul class="nav nav-pills navOption ">
+                <li class="nav-item "><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+                <li class="nav-item "><a href="#" class="nav-link">Order</a></li>
+                <li class="nav-item "><a href="customer.html" class="nav-link">Customer</a></li>
+                <li class="nav-item "><a href="Products.html" class="nav-link">Store</a></li>
+                <li class="nav-item "><a href="#" class="nav-link">Reporte</a></li>
+            </ul>
+        </header>
+
+        <div class="b-example-divider "></div>
+
     </div>
 
-    <button class="btn" id="addCustomerBtn">Add Customer</button>
-    <button class="btn" id="cancelBtn">Cancel</button>
-    <button class="btn" id="publishBtn">Publish</button>
 
-    <script>
-        // Variables to manage ID state
-        let currentNumber = 1; // Starting number
-        let isTemporary = false; // Track if ID is temporarily incremented
+    <div class="container">
+        <div class="row gap-2">
+            <!-- <div class="col p-2 border-color">
+                <p class="fw-bold text-white fs-3">Catogeris</p>
+            </div> -->
+            <div class="col  border-color tile " id="burgers">
+                <img src="../image/icon/Burger.png" width="50px">
+                <p class="fw-bold fs-6">Burgers</p>
+            </div>
+            <div class="col  border-color tile " id="submarines">
+                <img src="../image/icon/Submarine.png" width="50px">
+                <p class="fw-bold fs-6">Submarines</p>
+            </div>
+            <div class="col  border-color tile " id="fries">
+                <img src="../image/icon/FrenchFries.png" width="50px">
+                <p class="fw-bold fs-6">Fries</p>
+            </div>
+            <div class="col  border-color tile " id="pasta">
+                <img src="../image/icon/Pasta.png" width="50px">
+                <p class="fw-bold fs-6">Pasta</p>
+            </div>
+            <div class="col  border-color tile " id="chicken">
+                <img src="../image/icon/Chicken.png" width="50px">
+                <p class="fw-bold fs-6">Chicken</p>
+            </div>
+            <div class="col border-color tile " id="beverages">
+                <img src="../image/icon/Bevarages.png" width="50px">
+                <p class="fw-bold fs-6">Beverages</p>
+            </div>
 
-        // Update the Customer ID readonly input
-        function updateCustomerId() {
-            const customerIdField = document.getElementById("customerId");
-            const formattedNumber = String(currentNumber).padStart(4, "0"); // Format as 0001
-            customerIdField.value = `C${formattedNumber}`; // Update with prefix
-        }
+        </div>
+        <div class="b-example-divider "></div>
+    </div>
 
-        // Add Customer button logic
-        document.getElementById("addCustomerBtn").addEventListener("click", () => {
-            if (!isTemporary) {
-                currentNumber++; // Increment number
-                updateCustomerId();
-                isTemporary = true; // Mark as temporary
-            }
-        });
 
-        // Cancel button logic
-        document.getElementById("cancelBtn").addEventListener("click", () => {
-            if (isTemporary) {
-                currentNumber--; // Decrement number
-                updateCustomerId();
-                isTemporary = false; // Reset temporary state
-            }
-        });
+    <div class="container">
+        <div class="row" id="productTile">
+            <!-- <div class="col col-sm col-md-4 col-lg-3 col-xl-2 mt-3 gap-3 custom-card-col">
+                <div class="card card-custom" > -->
+                    <!-- item display -->
+                <!-- </div>
+            </div> -->
 
-        // Publish button logic
-        document.getElementById("publishBtn").addEventListener("click", () => {
-            if (isTemporary) {
-                isTemporary = false; // Finalize ID
-                alert("Customer ID saved: " + document.getElementById("customerId").value);
-            }
-        });
+        </div>
+    </div>
 
-        // Initialize Customer ID on page load
-        // updateCustomerId();
-    </script>
+
+
+
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <p class="col-md-4 mb-0 text-white">&copy; 2024 Company, Inc</p>
+
+            <a href="index.html"
+                class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap" />
+                </svg>
+                <span class="fs-3 text-danger-custom fw-bold">MOS <span
+                        class="text-warning-custom">Burgers</span></span>
+
+            </a>
+
+
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Order</a></li>
+                <li class="nav-item"><a href="customer.html" class="nav-link px-2 text-white">Customer</a></li>
+                <li class="nav-item"><a href="Products.html" class="nav-link px-2 text-white">Store</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Reporte</a></li>
+            </ul>
+        </footer>
+    </div>
+
+
+    <script type="module" src="../JS/placeOrder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
+
+
+<div class="container">
+    <div class="row align-items-center g-5 py-5 border-1">
+
+        <div class="col-lg-8 " style="min-height:300px;">
+
+            <div class="container">
+                <div class="row" id="productTile">
+                
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-4 bg-white " style="min-height: 300px;">
+
+        </div>
+
+    </div>
+</div>

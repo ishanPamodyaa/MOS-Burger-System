@@ -1,0 +1,39 @@
+:root {
+  --primary-color-Red: #e41212;
+  --primary-color-RedMixYellow: #ff8902;
+  --white: #e6dddd;
+  --black: #383737;
+}
+.text-light-custom {
+  color: var(--white);
+}
+
+.custom-boarder{
+  border: 1px solid var(--primary-color-RedMixYellow) !important;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  border-radius: 10px !important;
+  
+}
+.table-custom{
+
+    display: table;
+    color: var(--white);
+    align-items: center;
+    justify-content: flex-end;
+    text-align:right;
+    padding: 20px;
+    width: 100%;
+    
+    
+}
+.leftCol{
+    display: table-cell;
+    justify-content: flex-start;
+    text-align:left;
+}
+.order-total{
+    display: flex;
+    justify-content: end;
+  
+}
