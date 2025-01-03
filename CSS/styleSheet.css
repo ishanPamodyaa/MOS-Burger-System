@@ -1,16 +1,15 @@
-:root{
-    --primary-color-Red : #e41212;
-    --primary-color-RedMixYellow : #ff8902;
-    --white:#e6dddd;
-    --black: #383737;
-
+:root {
+  --primary-color-Red: #e41212;
+  --primary-color-RedMixYellow: #ff8902;
+  --white: #e6dddd;
+  --black: #383737;
 }
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.664), rgba(0, 0, 0, 0.5)), 
-                url(../image/site_back.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center; /* Ensures the image is centered */
+  background: linear-gradient(rgba(0, 0, 0, 0.664), rgba(0, 0, 0, 0.5)),
+    url(../image/site_back.jpg) !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; /* Ensures the image is centered */
 }
 
 li:after {
@@ -27,44 +26,40 @@ li:hover:after {
   background-color: var(--primary-color-Red);
 }
 
-
 .navOption,
 .nav-link {
   font-weight: 600;
-  color:var(--white) !important;
+  color: var(--white) !important;
   font-size: 18px !important;
 }
-.text-danger-custom{
-    color: var(--primary-color-Red) !important;
+.text-danger-custom {
+  color: var(--primary-color-Red) !important;
 }
-.text-warning-custom{
-    color:var(--primary-color-RedMixYellow) !important;
-}
-
-.btn-outline-warning{
-    border-color: var(--primary-color-RedMixYellow) !important;
-
-}
-.btn-outline-warning:hover{
-    color:var(--white) !important;
-    background-color: var(--primary-color-RedMixYellow) !important;
+.text-warning-custom {
+  color: var(--primary-color-RedMixYellow) !important;
 }
 
-.heading{
+.btn-outline-warning {
+  border-color: var(--primary-color-RedMixYellow) !important;
+}
+.btn-outline-warning:hover {
+  color: var(--white) !important;
+  background-color: var(--primary-color-RedMixYellow) !important;
+}
 
-    color: var(--white);
-    text-align: center;
+.heading {
+  color: var(--white);
+  text-align: center;
 }
 
 .fade {
-    animation-name: fade;
-    animation-duration: 3s;
-  }
+  animation-name: fade;
+  animation-duration: 3s;
+}
 
-
-  body{
-    background: #f4f5f7;
-    margin-top:20px;
+body {
+  background: #f4f5f7;
+  margin-top: 20px;
 }
 .cart-container {
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -77,43 +72,12 @@ li:hover:after {
   margin: 20px 0 30px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @keyframes fade {
-    from {
-        opacity: .4
-    }
+  from {
+    opacity: 0.4;
+  }
 
-    to {
-        opacity: 1
-    }
+  to {
+    opacity: 1;
+  }
 }

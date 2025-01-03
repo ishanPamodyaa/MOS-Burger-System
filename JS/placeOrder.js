@@ -128,17 +128,26 @@ document
   });
 
 function addToCart(catogary, index) {
-  let productPotitionInCart = cartData.findIndex((val) => val.index == index);
+  console.log("add to cart ekata awa");
+
+  let productPotitionInCart = cartData.findIndex(
+    (cartItem) =>
+      cartItem.item.itemCode === product[selectedCatogary][index].itemCode
+  );
+  console.log("indexes ", productPotitionInCart);
+
   // const dynamicCartItem=document.getElementById("cartTable")
   if (cartData.length <= 0) {
     cartData = [
       {
+        item: product[catogary][index],
         index: index,
         quantity: 1,
       },
     ];
   } else if (productPotitionInCart < 0) {
     cartData.push({
+      item: product[catogary][index],
       index: index,
       quantity: 1,
     });
@@ -156,7 +165,11 @@ const addCartToHtml = (catogary, index) => {
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
       totalQty += item.quantity;
-      let produuctItem = product[selectedCatogary][index]; // Access product by index in cartData
+      let produuctItem = cartData[index].item;
+      console.log("product item", produuctItem);
+      console.log("cart data", cartData);
+      console.log("cart data", cartData[index].item.name);
+
       const cartItem = document.createElement("div");
       cartItem.classList.add(
         "d-flex",
@@ -171,7 +184,7 @@ const addCartToHtml = (catogary, index) => {
       );
       cartItem.innerHTML = `
           <div class="" style="width: 5%;">
-            <p class="mb-0 text-light">1</p>
+            <p class="mb-0 text-light">${index + 1}</p>
           </div>
           <div class="" style="width: 15%;">
             <img src="${
