@@ -12,6 +12,8 @@ let productEnabled = false;
 let selectedCatogary = "Burgers";
 let cartData = [];
 
+let discount = 0;
+let amount = 0;
 window.onload = function () {
   displayProductList(selectedCatogary);
 };
@@ -160,11 +162,13 @@ function addToCart(catogary, index) {
 const addCartToHtml = (catogary, index) => {
   const dynamicCartItem = document.getElementById("cartTable");
   dynamicCartItem.innerHTML = "";
-  let totalQty = 0;
 
+  let priceItems = 0;
+  let discountItems = 0;
+  let subTotal = priceItems - discountItems;
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
-      totalQty += item.quantity;
+      //   totalQty += item.quantity;
       let produuctItem = cartData[index].item;
       console.log("product item", produuctItem);
       console.log("cart data", cartData);
@@ -217,7 +221,45 @@ const addCartToHtml = (catogary, index) => {
           </div>
         `;
       dynamicCartItem.appendChild(cartItem);
+      //   console.log("ptice" , produuctItem.price);
+      console.log(
+        produuctItem.name,
+        produuctItem.price,
+        produuctItem.discount,
+        item.quantity
+      );
+
+      priceItems = priceItems + produuctItem.price * item.quantity;
+      discountItems =
+        discountItems +
+        (produuctItem.price * produuctItem.discount * item.quantity) / 100;
+
+      console.log("priceItems", priceItems);
+      console.log("discountItems", discountItems);
+      let subTotal = priceItems - discountItems;
+      console.log("sub total", subTotal);
+
+      const totaTable = document.getElementById("totalTable");
+      totaTable.innerHTML = `
+    <tr>
+        <td class="leftCol">Sub Total :</td>
+        <td>${priceItems}</td>
+    </tr>
+    <tr>
+        <td class="leftCol">Discount(10%) :</td>
+        <td>${discountItems}</td>
+    </tr>
+    <tr>
+    <td class="f-w-7 leftCol font-18">
+       <h4>Amount :</h4>
+    </td>
+        <td class="f-w-7 font-18 ">
+            <h4>${subTotal}</h4>
+        </td>
+    </tr>
+    `;
     });
+    console.log("total ekta kalin");
   }
 };
 
