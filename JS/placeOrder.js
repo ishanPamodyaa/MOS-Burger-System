@@ -21,29 +21,26 @@ let orderArray = [];
 let discount = 0;
 let amount = 0;
 let currentOrderID = 11;
+
 window.onload = function () {
   displayProductList(selectedCatogary);
 };
 
-function getNextID(){
-
-    return "0" + currentOrderID.toString().padStart(3,"0");
+function getNextID() {
+  return "0" + currentOrderID.toString().padStart(3, "0");
 }
 
-function  updateOrderID(){
-    const orderIDElement = document.getElementById("orderId");
-    currentOrderID++;
+function updateOrderID() {
+  const orderIDElement = document.getElementById("orderId");
+  currentOrderID++;
 
-    orderIDElement.textContent = getNextID();
-    console.log("Order ID updated:", orderIDElement.textContent);
-    
+  orderIDElement.textContent = getNextID();
+  console.log("Order ID updated:", orderIDElement.textContent);
 }
 
 let now = new Date();
 let currentDate = now.toUTCString().slice(5, 16);
 document.getElementById("currentDate").innerHTML = currentDate;
-
-
 
 //when select product catogery default catogery is Burger
 document
@@ -186,7 +183,8 @@ function addToCart(catogary, index) {
   addCartToHtml(catogary, index);
 }
 
-const addCartToHtml = (catogary, index) => {
+function addCartToHtml(catogary, index) {
+  console.log("add to cart html ekata awa");
   const dynamicCartItem = document.getElementById("cartTable");
   const totalCount = document.getElementById("totalCount");
 
@@ -195,6 +193,9 @@ const addCartToHtml = (catogary, index) => {
   let priceItems = 0;
   let discountItems = 0;
   let subTotal = priceItems - discountItems;
+  let totalItemCount = cartData.length;
+
+  totalCount.innerHTML = "Total Items : " + totalItemCount;
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
       //   totalQty += item.quantity;
@@ -261,7 +262,6 @@ const addCartToHtml = (catogary, index) => {
         produuctItem.discount,
         item.quantity
       );
-
       priceItems = priceItems + produuctItem.price * item.quantity;
       discountItems =
         discountItems +
@@ -292,8 +292,8 @@ const addCartToHtml = (catogary, index) => {
         </tr>
     `;
       // totalCount.innerHTML = cartData.length-1;
-      console.log("cart data", cartData.length);
-      totalCount.innerHTML = "Total Items : " + cartData.length;
+      console.log("cart data", cartData.length, "awaaaaaaaaaaaaaaaaaaaaaaaaa");
+
       document
         .getElementById(`minus-${index}`)
         .addEventListener("click", () => changeQuantity(index, -1));
@@ -312,7 +312,7 @@ const addCartToHtml = (catogary, index) => {
     console.log("Updated orderArray:", orderArray);
   }
   //   orderArray.push(priceItems,discountItems,subTotal);
-};
+}
 
 function changeQuantity(index, change) {
   cartData[index].quantity += change;
@@ -396,7 +396,6 @@ function placeOrder() {
 
   const orderDate = currentDate;
   const orderId = getNextID();
-  
 
   orderArray.push({
     orderID: orderId,
@@ -404,13 +403,48 @@ function placeOrder() {
     items: cartData,
     subTotal: subTotal,
     discount: discount,
-    amount: amount, 
+    amount: amount,
   });
 
   console.log("orderArray", orderArray);
 
- 
-    // cartData.length = 0;
-    addCartToHtml(); 
-    updateOrderID();
+  // cartData.length = 0;
+  addCartToHtml();
+  updateOrderID();
+}
+
+document.getElementById("canselBtn").addEventListener("click", () => {
+  clearOrder();
+  console.log(" order btn clicked");
+});
+
+function clearOrder() {
+  cartData.length = 0;
+  resetTotals();
+  resetCustomerData();
+  addCartToHtml();
+}
+
+function resetCustomerData() {
+  searchField.value = "";
+  document.getElementById("fullName").value = "";
+  document.getElementById("location").value = "";
+}
+
+function resetTotals() {
+  const subTotalElement = document.querySelector(
+    "#totalTable tr:nth-child(1) td:nth-child(2)"
+  );
+  const discountElement = document.querySelector(
+    "#totalTable tr:nth-child(2) td:nth-child(2)"
+  );
+  const amountElement = document.querySelector(
+    "#totalTable tr:nth-child(3) td:nth-child(2)"
+  );
+
+  if (subTotalElement) subTotalElement.innerHTML = "LKR 0.00";
+  if (discountElement) discountElement.innerHTML = "LKR 0.00";
+  if (amountElement) amountElement.innerHTML = "<h4>LKR 0.00</h4>";
+
+  console.log("Totals reset to zero");
 }
