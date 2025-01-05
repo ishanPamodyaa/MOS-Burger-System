@@ -362,7 +362,8 @@ function searchCustomer() {
     document.getElementById("location").value = customer.city;
   }
 
-  orderArray.push(customer);
+  orderArray.push(
+    {customer : customer,} );
 
   console.log(" order array", orderArray);
 }
@@ -407,10 +408,155 @@ function placeOrder() {
   });
 
   console.log("orderArray", orderArray);
-
+  console.log(orderArray[0].customer.fName );
   // cartData.length = 0;
   addCartToHtml();
   updateOrderID();
+
+
+
+  var docDefinition = {
+    content: [
+      // Title and Order Info
+      { text: "Order Details", style: "header" },
+      {
+        text: `Order ID: ${orderArray.orderId}`,
+        margin: [0, 10, 0, 5],
+        style: "orderInfo",
+      },
+      {
+        text: `Customer Name: ${orderArray[0].customer.fName}`,
+        margin: [0, 0, 0, 5],
+        style: "orderInfo",
+      },
+      {
+        text: `Phone Number: ${orderArray[0].customer.primaryContact}`,
+        margin: [0, 0, 0, 5],
+        style: "orderInfo",
+      },
+      {
+        text: `Address: ${orderArray[0].customer.address}`,
+        margin: [0, 0, 0, 15],
+        style: "orderInfo",
+      },
+
+      // Table of Items
+      {
+        table: {
+          headerRows: 1,
+          widths: ["*", "auto", "auto", "auto"],
+          body: [
+            [
+              { text: "Item", style: "tableHeader" },
+              { text: "Quantity", style: "tableHeader" },
+              { text: "Price", style: "tableHeader" },
+              { text: "Total", style: "tableHeader" },
+            ],
+          ],
+        },
+        layout: {
+          fillColor: (rowIndex) => (rowIndex === 0 ? "#dc6b19" : null),
+        },
+      },
+
+      // Summary section
+      {
+        text: `Total Items: ${cartData.length}`,
+        margin: [0, 10, 0, 5],
+        style: "summaryText",
+      },
+      {
+        text: `Subtotal: LKR ${orderArray.subtotal}`,
+        margin: [0, 0, 0, 5],
+        style: "summaryText",
+      },
+      {
+        text: `Discount: LKR ${orderArray.discount}`,
+        margin: [0, 0, 0, 5],
+        style: "summaryText",
+      },
+      {
+        text: `Total: LKR ${orderArray.amount}`,
+        style: "total",
+        margin: [0, 10, 0, 0],
+      },
+
+      // Additional Notes
+      // {
+      //   text: `Additional Notes: ${additionalNotes}`,
+      //   margin: [0, 10, 0, 5],
+      //   style: "notes",
+      // },
+    ],
+
+    // Styles
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true,
+        alignment: "center",
+        margin: [0, 0, 0, 20],
+        color: "#dc6b19",
+      },
+      orderInfo: {
+        fontSize: 12,
+        margin: [0, 5, 0, 5],
+        color: "#333333",
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 14,
+        color: "white",
+        alignment: "center",
+      },
+      tableContent: {
+        fontSize: 12,
+        color: "#333333",
+        alignment: "center",
+      },
+      summaryText: {
+        fontSize: 12,
+        bold: true,
+        color: "#333333",
+      },
+      total: {
+        fontSize: 16,
+        bold: true,
+        alignment: "right",
+        color: "#dc6b19",
+      },
+      notes: {
+        fontSize: 12,
+        italics: true,
+        color: "#888888",
+      },
+    },
+  };
+
+  // Add order items to the table
+  cartData.forEach((item) => {
+    if (item.quantity > 0) {
+      docDefinition.content[5].table.body.push([
+        { text: item.name, style: "tableContent" },
+        { text: item.quantity, style: "tableContent" },
+        { text: `LKR ${item.price}`, style: "tableContent" },
+        {
+          text: `LKR ${(item.price * item.quantity)}`,
+          style: "tableContent",
+        },
+      ]);
+    }
+  });
+
+  // Check if the table has items
+  if (docDefinition.content[5].table.body.length <= 1) {
+    console.error("No items to display in the table.");
+    return;
+  }
+
+  // Generate the PDF
+  const pdfName = orderId + ".pdf";
+  pdfMake.createPdf(docDefinition).download(pdfName);
 }
 
 document.getElementById("canselBtn").addEventListener("click", () => {
@@ -448,3 +594,145 @@ function resetTotals() {
 
   console.log("Totals reset to zero");
 }
+
+function pdfBilGenaretor(){
+ 
+
+  var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
+
+}
+  var props = {
+    outputType: jsPDFInvoiceTemplate.OutputType.Save,
+    onJsPDFDocCreation: function (jsPDFDoc) {
+      // Custom logic for jsPDF document manipulation
+      console.log("jsPDF document created:", jsPDFDoc);
+  }, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
+    returnJsPDFDocObject: true,
+    fileName: "Invoice 2021",
+    orientationLandscape: false,
+    compress: true,
+    // logo: {
+    //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+    //     type: 'PNG', //optional, when src= data:uri (nodejs case)
+    //     width: 53.33, //aspect ratio = width/height
+    //     height: 26.66,
+    //     margin: {
+    //         top: 0, //negative or positive num, from the current position
+    //         left: 0 //negative or positive num, from the current position
+    //     }
+    // },
+    // stamp: {
+    //     inAllPages: true, //by default = false, just in the last page
+    //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+    //     type: 'JPG', //optional, when src= data:uri (nodejs case)
+    //     width: 20, //aspect ratio = width/height
+    //     height: 20,
+    //     margin: {
+    //         top: 0, //negative or positive num, from the current position
+    //         left: 0 //negative or positive num, from the current position
+    //     }
+    // },
+    business: {
+        name: "MOS Burgers",
+        address: "Albania, Tirane ish-Dogana, Durres 2001",
+        phone: "(+355) 069 11 11 111",
+        email: "email@example.com",
+        email_1: "info@example.al",
+        website: "www.example.al",
+    },
+    contact: {
+        label: "Bill issued for:",
+        name: "Client Name `${}`",
+        address: "Albania, Tirane, Astir",
+        phone: "(+355) 069 22 22 222",
+        email: "client@website.al",
+        otherInfo: "www.website.al",
+    },
+    invoice: {
+        label: "Invoice #: ",
+        num: 19,
+        invDate: "Payment Date: 01/01/2021 18:12",
+        invGenDate: "Invoice Date: 02/02/2021 10:17",
+        headerBorder: false,
+        tableBodyBorder: false,
+        header: [
+          {
+            title: "#", 
+            style: { 
+              width: 10 
+            } 
+          }, 
+          { 
+            title: "Title",
+            style: {
+              width: 30
+            } 
+          }, 
+          { 
+            title: "Description",
+            style: {
+              width: 80
+            } 
+          }, 
+          { title: "Price"},
+          { title: "Quantity"},
+          { title: "Unit"},
+          { title: "Total"}
+        ],
+        table: Array.from(Array(10), (item, index)=>([
+            index + 1,
+            "There are many variations ",
+            "Lorem Ipsum is simply dummy text dummy text ",
+            200.5,
+            4.5,
+            "m2",
+            400.5
+        ])),
+        additionalRows: [{
+            col1: 'Total:',
+            col2: '145,250.50',
+            col3: 'ALL',
+            style: {
+                fontSize: 14 //optional, default 12
+            }
+        },
+        {
+            col1: 'VAT:',
+            col2: '20',
+            col3: '%',
+            style: {
+                fontSize: 10 //optional, default 12
+            }
+        },
+        {
+            col1: 'SubTotal:',
+            col2: '116,199.90',
+            col3: 'ALL',
+            style: {
+                fontSize: 10 //optional, default 12
+            }
+        }],
+        invDescLabel: "Invoice Note",
+        invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+    },
+    footer: {
+        text: "The invoice is created on a computer and is valid without the signature and stamp.",
+    },
+    pageEnable: true,
+    pageLabel: "Page ",
+    onJsPDFDocCreation: (doc) => {
+      const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+      const centerX = pageWidth / 2; // Calculate center of page
+
+      // Add centered business information
+      doc.setFontSize(14);
+      doc.text("Business Name", centerX, 20, { align: "center" });
+      doc.setFontSize(12);
+      doc.text("Albania, Tirane ish-Dogana, Durres 2001", centerX, 28, { align: "center" });
+      doc.text("(+355) 069 11 11 111", centerX, 36, { align: "center" });
+      doc.text("email@example.com", centerX, 44, { align: "center" });
+      doc.text("www.example.al", centerX, 52, { align: "center" });
+  },
+};
+
+
