@@ -1,4 +1,10 @@
 import {
+  fetchCustomers,
+  addCustomer,
+  removeCustomer,
+} from "./customerMange.js";
+
+import {
   fetchProducts,
   addProduct,
   removeProduct,
@@ -11,12 +17,33 @@ let isExpired = false;
 let productEnabled = false;
 let selectedCatogary = "Burgers";
 let cartData = [];
-
+let orderArray = [];
 let discount = 0;
 let amount = 0;
+let currentOrderID = 11;
 window.onload = function () {
   displayProductList(selectedCatogary);
 };
+
+function getNextID(){
+
+    return "0" + currentOrderID.toString().padStart(3,"0");
+}
+
+function  updateOrderID(){
+    const orderIDElement = document.getElementById("orderId");
+    currentOrderID++;
+
+    orderIDElement.textContent = getNextID();
+    console.log("Order ID updated:", orderIDElement.textContent);
+    
+}
+
+let now = new Date();
+let currentDate = now.toUTCString().slice(5, 16);
+document.getElementById("currentDate").innerHTML = currentDate;
+
+
 
 //when select product catogery default catogery is Burger
 document
@@ -161,6 +188,8 @@ function addToCart(catogary, index) {
 
 const addCartToHtml = (catogary, index) => {
   const dynamicCartItem = document.getElementById("cartTable");
+  const totalCount = document.getElementById("totalCount");
+
   dynamicCartItem.innerHTML = "";
 
   let priceItems = 0;
@@ -190,7 +219,7 @@ const addCartToHtml = (catogary, index) => {
           <div class="" style="width: 5%;">
             <p class="mb-0 text-light">${index + 1}</p>
           </div>
-          <div class="" style="width: 15%;">
+          <div class="" style="width: 10%;">
             <img src="${
               produuctItem.img
             }" class="img-fluid" width="45" alt="product">
@@ -209,15 +238,19 @@ const addCartToHtml = (catogary, index) => {
               </div>
             </div>
           </div>
-          <div class="" style="width: 15%;">
-            <div class="form-group">
-              <input type="number" class="form-control" name="cartQty${index}" id="cartQty${index}" value="${
-        item.quantity
-      }">
+          <div class="col-lg-1" style="width: 20%;">
+            <div class="quntityChanger">
+         
+                <div class="">
+                  <button class="btn btn-sm btn-outline-warning" id="minus-${index}">-</button>
+                  <span class="text-light">${item.quantity}</span>
+                  <button class="btn btn-sm btn-outline-warning" id="plus-${index}">+</button>
+              </div>
+
             </div>
           </div>
-          <div class="" style="width: 5%;">
-            <a href="#" class="text-danger"><i class="ri-delete-bin-2-line"></i></a>
+          <div class="col-lg-1" style="width: 8%;">
+            <i class="ri-delete-bin-2-line text-danger fa-2x" id="delete-${index}"></i>     
           </div>
         `;
       dynamicCartItem.appendChild(cartItem);
@@ -236,441 +269,148 @@ const addCartToHtml = (catogary, index) => {
 
       console.log("priceItems", priceItems);
       console.log("discountItems", discountItems);
-      let subTotal = priceItems - discountItems;
+      const subTotal = priceItems - discountItems;
       console.log("sub total", subTotal);
 
       const totaTable = document.getElementById("totalTable");
       totaTable.innerHTML = `
-    <tr>
-        <td class="leftCol">Sub Total :</td>
-        <td>${priceItems}</td>
-    </tr>
-    <tr>
-        <td class="leftCol">Discount(10%) :</td>
-        <td>${discountItems}</td>
-    </tr>
-    <tr>
-    <td class="f-w-7 leftCol font-18">
-       <h4>Amount :</h4>
-    </td>
-        <td class="f-w-7 font-18 ">
-            <h4>${subTotal}</h4>
+        <tr>
+            <td class="leftCol">Sub Total :</td>
+            <td id="subTotal">LKR ${priceItems}</td>
+        </tr>
+            <tr>
+        <td class="leftCol">Discount :</td>
+        <td id="discount">LKR ${discountItems}</td>
+            </tr>
+            <tr>
+        <td class="f-w-7 leftCol font-18 text-success">
+                <h4>Amount :</h4>
         </td>
-    </tr>
+            <td class="f-w-7 font-18 text-success ">
+                <h4 id="amount">LKR ${subTotal}</h4>
+            </td>
+        </tr>
     `;
+      // totalCount.innerHTML = cartData.length-1;
+      console.log("cart data", cartData.length);
+      totalCount.innerHTML = "Total Items : " + cartData.length;
+      document
+        .getElementById(`minus-${index}`)
+        .addEventListener("click", () => changeQuantity(index, -1));
+      console.log("- eka ebuwa");
+
+      document
+        .getElementById(`plus-${index}`)
+        .addEventListener("click", () => changeQuantity(index, 1));
+      document
+        .getElementById(`delete-${index}`)
+        .addEventListener("click", () => removeItem(index));
+      console.log("total ekta kalin");
     });
-    console.log("total ekta kalin");
+
+    priceItems, discountItems, subTotal;
+    console.log("Updated orderArray:", orderArray);
   }
+  //   orderArray.push(priceItems,discountItems,subTotal);
 };
 
-///////////////////////////////////////////////////////////////////
-// ************************************************
-// Shopping Cart API
-// ************************************************
+function changeQuantity(index, change) {
+  cartData[index].quantity += change;
+  if (cartData[index].quantity <= 0) {
+    removeItem(index);
+  }
+  addCartToHtml();
+}
 
-// var shoppingCart = (function () {
-//   // =============================
-//   // Private methods and propeties
-//   // =============================
-//   cart = [];
+function removeItem(index) {
+  //   cartData[index].quantity = 0;
+  if (index == 0) {
+    let fEle = cartData.shift();
+  } else if (index > 0 && index < cartData.length - 1) {
+    let pop = cartData.splice(index, 1);
+  } else if (index == cartData.length - 1) {
+    let pop = cartData.pop();
+  }
+  addCartToHtml();
+}
 
-//   // Constructor
-//   function Item(name, price, count) {
-//     this.name = name;
-//     this.price = price;
-//     this.count = count;
-//   }
+const searchField = document.getElementById("searchField");
 
-//   // Save cart
-//   function saveCart() {
-//     sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
-//   }
+searchField.addEventListener("keypress", function (e) {
+  if (e.key == "Enter") {
+    e.preventDefault();
+    console.log("serarch ekata rady");
 
-//   // Load cart
-//   function loadCart() {
-//     cart = JSON.parse(sessionStorage.getItem("shoppingCart"));
-//   }
-//   if (sessionStorage.getItem("shoppingCart") != null) {
-//     loadCart();
-//   }
+    searchCustomer();
+  }
+});
 
-//   // =============================
-//   // Public methods and propeties
-//   // =============================
-//   var obj = {};
+function searchCustomer() {
+  console.log("serarch ekata awa");
+  const searchValue = searchField.value.trim();
+  let customerData = fetchCustomers();
+  const customer = customerData.find(
+    (customer) =>
+      customer.customerNIC == searchValue ||
+      customer.primaryContact == searchValue ||
+      customer.secondaryContact == searchValue
+  );
 
-//   // Add to cart
-//   obj.addItemToCart = function (name, price, count) {
-//     for (var item in cart) {
-//       if (cart[item].name === name) {
-//         cart[item].count++;
-//         saveCart();
-//         return;
-//       }
-//     }
-//     var item = new Item(name, price, count);
-//     cart.push(item);
-//     saveCart();
-//   };
-//   // Set count from item
-//   obj.setCountForItem = function (name, count) {
-//     for (var i in cart) {
-//       if (cart[i].name === name) {
-//         cart[i].count = count;
-//         break;
-//       }
-//     }
-//   };
-//   // Remove item from cart
-//   obj.removeItemFromCart = function (name) {
-//     for (var item in cart) {
-//       if (cart[item].name === name) {
-//         cart[item].count--;
-//         if (cart[item].count === 0) {
-//           cart.splice(item, 1);
-//         }
-//         break;
-//       }
-//     }
-//     saveCart();
-//   };
+  if (customer) {
+    document.getElementById("fullName").value =
+      customer.fName + " " + customer.lName;
+    document.getElementById("location").value = customer.city;
+  }
 
-//   // Remove all items from cart
-//   obj.removeItemFromCartAll = function (name) {
-//     for (var item in cart) {
-//       if (cart[item].name === name) {
-//         cart.splice(item, 1);
-//         break;
-//       }
-//     }
-//     saveCart();
-//   };
+  orderArray.push(customer);
 
-//   // Clear cart
-//   obj.clearCart = function () {
-//     cart = [];
-//     saveCart();
-//   };
+  console.log(" order array", orderArray);
+}
 
-//   // Count cart
-//   obj.totalCount = function () {
-//     var totalCount = 0;
-//     for (var item in cart) {
-//       totalCount += cart[item].count;
-//     }
-//     return totalCount;
-//   };
+document.getElementById("placeOrderBtn").addEventListener("click", () => {
+  placeOrder();
+  console.log("btn clicked");
+});
 
-//   // Total cart
-//   obj.totalCart = function () {
-//     var totalCart = 0;
-//     for (var item in cart) {
-//       totalCart += cart[item].price * cart[item].count;
-//     }
-//     return Number(totalCart.toFixed(2));
-//   };
+function placeOrder() {
+  // Retrieve values from dynamically generated table cells
+  const subTotalElement = document.querySelector(
+    "#totalTable tr:nth-child(1) td:nth-child(2)"
+  );
+  const discountElement = document.querySelector(
+    "#totalTable tr:nth-child(2) td:nth-child(2)"
+  );
+  const amountElement = document.querySelector(
+    "#totalTable tr:nth-child(3) td:nth-child(2)"
+  );
 
-//   // List cart
-//   obj.listCart = function () {
-//     var cartCopy = [];
-//     for (i in cart) {
-//       item = cart[i];
-//       itemCopy = {};
-//       for (p in item) {
-//         itemCopy[p] = item[p];
-//       }
-//       itemCopy.total = Number(item.price * item.count).toFixed(2);
-//       cartCopy.push(itemCopy);
-//     }
-//     return cartCopy;
-//   };
+  const subTotal = subTotalElement
+    ? parseFloat(subTotalElement.textContent.replace("LKR", "").trim())
+    : 0;
+  const discount = discountElement
+    ? parseFloat(discountElement.textContent.replace("LKR", "").trim())
+    : 0;
+  const amount = amountElement
+    ? parseFloat(amountElement.textContent.replace("LKR", "").trim())
+    : 0;
 
-//   // cart : Array
-//   // Item : Object/Class
-//   // addItemToCart : Function
-//   // removeItemFromCart : Function
-//   // removeItemFromCartAll : Function
-//   // clearCart : Function
-//   // countCart : Function
-//   // totalCart : Function
-//   // listCart : Function
-//   // saveCart : Function
-//   // loadCart : Function
-//   return obj;
-// })();
+  const orderDate = currentDate;
+  const orderId = getNextID();
+  
 
-// // *****************************************
-// // Triggers / Events
-// // *****************************************
-// // Add item
-// $(".add-to-cart").click(function (event) {
-//   event.preventDefault();
-//   var name = $(this).data("name");
-//   var price = Number($(this).data("price"));
-//   shoppingCart.addItemToCart(name, price, 1);
-//   displayCart();
-// });
+  orderArray.push({
+    orderID: orderId,
+    orderDate: orderDate,
+    items: cartData,
+    subTotal: subTotal,
+    discount: discount,
+    amount: amount, 
+  });
 
-// // Clear items
-// $(".clear-cart").click(function () {
-//   shoppingCart.clearCart();
-//   displayCart();
-// });
+  console.log("orderArray", orderArray);
 
-// function displayCart() {
-//   var cartArray = shoppingCart.listCart();
-//   var output = "";
-//   for (var i in cartArray) {
-//     output +=
-//       "<tr>" +
-//       "<td>" +
-//       cartArray[i].name +
-//       "</td>" +
-//       "<td>(" +
-//       cartArray[i].price +
-//       ")</td>" +
-//       "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
-//       cartArray[i].name +
-//       ">-</button>" +
-//       "<input type='number' class='item-count form-control' data-name='" +
-//       cartArray[i].name +
-//       "' value='" +
-//       cartArray[i].count +
-//       "'>" +
-//       "<button class='plus-item btn btn-primary input-group-addon' data-name=" +
-//       cartArray[i].name +
-//       ">+</button></div></td>" +
-//       "<td><button class='delete-item btn btn-danger' data-name=" +
-//       cartArray[i].name +
-//       ">X</button></td>" +
-//       " = " +
-//       "<td>" +
-//       cartArray[i].total +
-//       "</td>" +
-//       "</tr>";
-//   }
-//   $(".show-cart").html(output);
-//   $(".total-cart").html(shoppingCart.totalCart());
-//   $(".total-count").html(shoppingCart.totalCount());
-// }
-
-// // Delete item button
-
-// $(".show-cart").on("click", ".delete-item", function (event) {
-//   var name = $(this).data("name");
-//   shoppingCart.removeItemFromCartAll(name);
-//   displayCart();
-// });
-
-// // -1
-// $(".show-cart").on("click", ".minus-item", function (event) {
-//   var name = $(this).data("name");
-//   shoppingCart.removeItemFromCart(name);
-//   displayCart();
-// });
-// // +1
-// $(".show-cart").on("click", ".plus-item", function (event) {
-//   var name = $(this).data("name");
-//   shoppingCart.addItemToCart(name);
-//   displayCart();
-// });
-
-// // Item count input
-// $(".show-cart").on("change", ".item-count", function (event) {
-//   var name = $(this).data("name");
-//   var count = Number($(this).val());
-//   shoppingCart.setCountForItem(name, count);
-//   displayCart();
-// });
-
-// displayCart();
-//////////////////////////////////////////////////////////////////////////
-//   document
-//     .getElementById("addProductForm")
-//     .addEventListener("submit", function (event) {
-//       event.preventDefault();
-//       addNewProduct();
-//     });
-
-//   function addNewProduct() {
-//     const productCode = document.getElementById("itemCode").value;
-//     const cat = document.getElementById("itemCategory");
-//     const productCatogery = cat.options[cat.selectedIndex].text;
-//     const productName = document.getElementById("itemName").value;
-//     const productPrice =
-//       parseFloat(document.getElementById("itemPrice").value) || 0;
-//     const productDiscount =
-//       parseFloat(document.getElementById("itemDiscount").value) || 0;
-//     const productQty = parseFloat(document.getElementById("itemQty").value) || 0;
-//     const productExpDate = document.getElementById("itemExpDate").value;
-
-//     for (let i = 0; i < product[productCatogery].length; i++) {
-//       if (product[productCatogery][i].itemCode === productCode) {
-//         // console.log("ADD NEW", productCode, product[productCatogery][i].itemCode);
-//         removeProduct(i, productCatogery);
-//         console.log(
-//           "add new eka athule product eka remive karala iwrai",
-//           selectedCatogary
-//         );
-
-//         displayProductList(selectedCatogary);
-//       }
-//     }
-
-//     const newProduct = {
-//       itemCode: productCode,
-//       name: productName,
-//       price: productPrice,
-//       discount: productDiscount,
-//       quantity: productQty,
-//       expiryDate: productExpDate,
-//       img: uploadedImage,
-//     };
-//     console.log("sasasasasa", uploadedImage);
-
-//     if (!product[productCatogery]) {
-//       product[productCatogery] = [];
-//     }
-
-//     selectedCatogary = productCatogery;
-
-//     addProduct(newProduct, selectedCatogary);
-//     updateProduct(
-//       newProduct,
-//       product[selectedCatogary].length - 1,
-//       selectedCatogary
-//     );
-//     console.log("update eken eliye");
-
-//     displayProductList(selectedCatogary);
-
-//     console.log("lsllsls ", newProduct);
-//   }
-
-//   function previewImage(event) {
-//     const file = event.target.files[0];
-//     console.log("file ekaaaa", file);
-
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onload = function (e) {
-//         const imagePreview = document.getElementById("imagePreview");
-//         imagePreview.src = e.target.result;
-//         imagePreview.style.display = "block";
-//         uploadedImage = e.target.result;
-//         console.log("e.target.result;",e.target.result);
-//         console.log("uploadedImage", uploadedImage);
-
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//     console.log(uploadedImage);
-//   }
-//   document.getElementById("itemImg").addEventListener("change", previewImage);
-
-//   function updateProduct(newProduct, index, catogary) {
-//     const dynamicProductTile = document.getElementById("productTile");
-//     console.log("update eka atule", index, catogary);
-
-//     const productTile = document.createElement("div");
-//     productTile.classList.add(
-//       "col",
-//       "col-sm",
-//       "col-md-4",
-//       "col-lg-3",
-//       "col-xl-2",
-//       "mt-3",
-//       "custom-card-col"
-//     );
-//     console.log("img seen", newProduct.img);
-
-//     productTile.innerHTML = `
-
-//   <div class="card card-custom"  >
-//           <div class="imgDiv">
-//               <img src="${newProduct.img}" class="card-img-top"
-//                   alt="${newProduct.name}" cap">
-//           </div>
-//           <div class="card-body cardBody">
-//               <div class="nameDiv">
-//                   <p class="productName">${newProduct.name}</p>
-//               </div>
-//               <div class="priceDiv" >
-//                   <h5 class="price text-center fw-bold ">LKR ${newProduct.price}</h5>
-//               </div>
-//               <div class="d-flex justify-content-sm-between flex-row ">
-
-//                       <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
-//                       <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
-//                       <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
-//                   </div>
-
-//               </div>
-//           </div>
-//       </div>
-//   `;
-
-//     // Attach event listeners to the new icons
-//     console.log("methana p1");
-
-//     const editIcon = productTile.querySelector(".fa-pencil-square-o");
-//     const deleteIcon = productTile.querySelector(".fa-trash-o");
-//     const shopIcon = productTile.querySelector(".fa-shopping-cart");
-
-//     console.log("methana p2");
-
-//     editIcon.addEventListener("click", (evt) => {
-//       editProduct(index, catogary);
-//       console.log("Edit eken passe");
-
-//     });
-
-//     deleteIcon.addEventListener("click", (evt) => {
-//       removeProduct(index, catogary);
-//       displayProductList(catogary);
-//     });
-
-//     shopIcon.addEventListener("click", (evt) => {
-//       // console.log("Shop action triggered for index:", index);
-//       // Implement shop functionality
-//     });
-//     console.log("methana p3");
-
-//     // Append the product tile to the DOM
-//     dynamicProductTile.appendChild(productTile);
-//     console.log("methana p4");
-//   }
-
-//   function editProduct(index, catogary) {
-//     // Ensure category is selected and product array exists
-//     console.log("edit product ", index, catogary);
-
-//     if (!product[catogary]) {
-//       console.error("Category or product data is not defined");
-//       return;
-//     }
-
-//     const productToEdit = product[catogary][index];
-
-//     if (!productToEdit) {
-//       console.error("Invalid product index:", index);
-//       return;
-//     }
-//     console.log("image eekaa ", productToEdit.img);
-
-//     // Populate form fields with the selected product's data
-//     document.getElementById("itemCode").value = productToEdit.itemCode;
-//     document.getElementById("itemName").value = productToEdit.name;
-//     document.getElementById("itemPrice").value = productToEdit.price;
-//     document.getElementById("itemDiscount").value = productToEdit.discount;
-//     document.getElementById("itemQty").value = productToEdit.quantity;
-//     document.getElementById("itemExpDate").value = productToEdit.expiryDate;
-
-//     document.getElementById("imagePreview").src = productToEdit.img;
-//     document.getElementById("imagePreview").style.display = "block";
-
-//     document.getElementById("itemCategory").value = catogary;
-//     console.log("imageeeee", uploadedImage);
-//     const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-//     myModal.show();
-//   }
+ 
+    // cartData.length = 0;
+    addCartToHtml(); 
+    updateOrderID();
+}

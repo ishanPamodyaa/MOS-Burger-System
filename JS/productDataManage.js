@@ -234,6 +234,7 @@ let productData = {
       itemCode: "B10027",
       name: "French Fries (Large)",
       price: 800.0,
+      discount: 0,
       quantity: 1,
       expiryDate: "2024-12-31",
       img: "../image/product/Fries/French Fries (Large).png",

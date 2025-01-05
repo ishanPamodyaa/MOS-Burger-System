@@ -59,15 +59,16 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form id="addProductForm">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title fw-bold">Add Product</h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title fw-bold">Add Product</h4>
+                                <button type="button" class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"></button>
+                            </div>
 
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                           
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
                                 <div class="inputField mb-3">
                                     <label class="mb-2 fw-bold fs-7" for="itemCode">Product Code</label>
                                     <input type="text" placeholder="B1048" class="form-control" id="itemCode"
@@ -90,7 +91,8 @@
 
                                 <div class="inputField mb-3">
                                     <label class="mb-2 fw-bold fs-7" for="itemImg">Product Image</label>
-                                    <input type="file" accept="image/*" class="form-control" id="itemImg" name="itemImg" onchange="previewImage(event)">
+                                    <input type="file" accept="image/*" class="form-control" id="itemImg" name="itemImg"
+                                        onchange="previewImage(event)">
                                     <!-- Image preview element -->
                                     <img id="imagePreview" style="display:none; margin-top: 10px; max-width: 100%;" />
                                 </div>
@@ -124,17 +126,17 @@
                                     <input id="itemExpDate" class="form-control" type="date" name="itemExpDate"
                                         min="<?= date('Y-m-d'); ?>">
                                 </div>
-                            
-                        </div>
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                                name="btnPublish">Publish</button>
+                            </div>
 
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cansel</button>
-                        </div>
-                    </form>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                                    name="btnPublish">Publish</button>
+
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cansel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -183,8 +185,8 @@
         <div class="row" id="productTile">
             <!-- <div class="col col-sm col-md-4 col-lg-3 col-xl-2 mt-3 gap-3 custom-card-col">
                 <div class="card card-custom" > -->
-                    <!-- item display -->
-                <!-- </div>
+            <!-- item display -->
+            <!-- </div>
             </div> -->
 
         </div>
