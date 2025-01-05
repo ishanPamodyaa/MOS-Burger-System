@@ -466,17 +466,17 @@ function placeOrder() {
         style: "summaryText",
       },
       {
-        text: `Subtotal: LKR ${orderArray.subtotal}`,
+        text: `Subtotal: LKR ${orderArray[1].subtotal}`,
         margin: [0, 0, 0, 5],
         style: "summaryText",
       },
       {
-        text: `Discount: LKR ${orderArray.discount}`,
+        text: `Discount: LKR ${orderArray[1].discount}`,
         margin: [0, 0, 0, 5],
         style: "summaryText",
       },
       {
-        text: `Total: LKR ${orderArray.amount}`,
+        text: `Total: LKR ${orderArray[1].amount}`,
         style: "total",
         margin: [0, 10, 0, 0],
       },
@@ -537,11 +537,11 @@ function placeOrder() {
   cartData.forEach((item) => {
     if (item.quantity > 0) {
       docDefinition.content[5].table.body.push([
-        { text: item.name, style: "tableContent" },
+        { text: item.item.name, style: "tableContent" },
         { text: item.quantity, style: "tableContent" },
-        { text: `LKR ${item.price}`, style: "tableContent" },
+        { text: `LKR ${item.item.price}`, style: "tableContent" },
         {
-          text: `LKR ${(item.price * item.quantity)}`,
+          text: `LKR ${(item.item.price * item.quantity)}`,
           style: "tableContent",
         },
       ]);
