@@ -6,7 +6,7 @@ let productData = {
       price: 750.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Classic Burger (Large).png",
     },
     {
@@ -25,7 +25,7 @@ let productData = {
       discount: 0,
       discount: 15,
       quantity: 1,
-      expiryDate: "2023-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Turkey Burger.png",
     },
     {
@@ -43,7 +43,7 @@ let productData = {
       price: 800.0,
       discount: 20,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Chicken Burger (Regular).jpg",
     },
     {
@@ -52,7 +52,7 @@ let productData = {
       price: 1000.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Cheese Burger (Large).png",
     },
     {
@@ -70,7 +70,7 @@ let productData = {
       price: 650.0,
       discount: 15,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Bacon Burger.png",
     },
     {
@@ -88,7 +88,7 @@ let productData = {
       price: 1800.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Olive Burger.png",
     },
     {
@@ -106,7 +106,7 @@ let productData = {
       price: 1200.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Crispy Chicken Burger (Regular) .png",
     },
     {
@@ -115,7 +115,7 @@ let productData = {
       price: 1600.0,
       discount: 10,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Crispy Chicken Burger (Large) .png",
     },
     {
@@ -124,7 +124,7 @@ let productData = {
       price: 900.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Burger/Paneer Burger.png",
     },
   ],
@@ -135,7 +135,7 @@ let productData = {
       price: 2000.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Crispy Chicken Submarine (Large).png",
     },
     {
@@ -144,7 +144,7 @@ let productData = {
       price: 1500.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Crispy Chicken Submarine (Regular).png",
     },
     {
@@ -162,7 +162,7 @@ let productData = {
       price: 1400.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Chicken Submarine (Regular).png",
     },
     {
@@ -171,7 +171,7 @@ let productData = {
       price: 2300.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Grinder Submarine.png",
     },
     {
@@ -180,7 +180,7 @@ let productData = {
       price: 2200.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Cheese Submarine.png",
     },
     {
@@ -189,7 +189,7 @@ let productData = {
       price: 1900.0,
       discount: 16,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Double Cheese n Chicken Submarine.png",
     },
     {
@@ -198,7 +198,7 @@ let productData = {
       price: 2800.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/Special Horgie Submarine.png",
     },
     {
@@ -207,7 +207,7 @@ let productData = {
       price: 3000.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Submarines/MOS Special Submarine.png",
     },
   ],
@@ -218,7 +218,7 @@ let productData = {
       price: 1200.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Fries/Steak Fries (Large).png",
     },
     {
@@ -227,7 +227,7 @@ let productData = {
       price: 600.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Fries/Steak Fries (Medium).png",
     },
     {
@@ -236,7 +236,7 @@ let productData = {
       price: 800.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Fries/French Fries (Large).png",
     },
     {
@@ -245,7 +245,7 @@ let productData = {
       price: 650.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Fries/French Fries (Medium).png",
     },
     {
@@ -274,7 +274,7 @@ let productData = {
       price: 1600.0,
       discount: 15,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Pasta/Chicken n Cheese Pasta.png",
     },
     {
@@ -283,7 +283,7 @@ let productData = {
       price: 1700.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Pasta/Chicken Penne Pasta.png",
     },
     {
@@ -292,7 +292,7 @@ let productData = {
       price: 2900.0,
       discount: 10,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Pasta/Ground Turkey Pasta Bake.png",
     },
     {
@@ -301,7 +301,7 @@ let productData = {
       price: 2000.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Pasta/Creamy Shrimp Pasta.png",
     },
     {
@@ -328,7 +328,7 @@ let productData = {
       price: 2000.0,
       discount: 1,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Pasta/Baked Ravioli .png",
     },
   ],
@@ -340,7 +340,7 @@ let productData = {
       price: 1200.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Chicken/Fried Chicken (Small).webp",
     },
     {
@@ -349,7 +349,7 @@ let productData = {
       price: 2300.0,
       discount: 10,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Chicken/Fried Chicken (Regular) .png",
     },
     {
@@ -358,7 +358,7 @@ let productData = {
       price: 3100.0,
       discount: 5,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Chicken/Fried Chicken (Large).png",
     },
     {
@@ -367,7 +367,7 @@ let productData = {
       price: 2400.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Chicken/Hot Wings (Large) .png",
     },
     {
@@ -376,7 +376,7 @@ let productData = {
       price: 900.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Chicken/Devilled Chicken (Large).png",
     },
     {
@@ -396,7 +396,7 @@ let productData = {
       price: 990.0,
       discount: 5,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Beverages/Pepsi (330ml).png",
     },
     {
@@ -405,7 +405,7 @@ let productData = {
       price: 1230.0,
       discount: 0,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Beverages/Coca-Cola (330ml).png",
     },
     {
@@ -414,7 +414,7 @@ let productData = {
       price: 1500.0,
       discount: 3,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Beverages/Sprite (330ml) .png",
     },
     {
@@ -423,7 +423,7 @@ let productData = {
       price: 850.0,
       discount: 7,
       quantity: 1,
-      expiryDate: "2024-12-31",
+      expiryDate: "2025-01-30",
       img: "../image/product/Beverages/Mirinda (330ml).png",
     },
   ],

@@ -82,3 +82,19 @@
     }
   }
   
+  .border-custom{
+
+    background-color:   rgba(51, 51, 51, 0.096);
+    border: 1px solid var(--primary-color-RedMixYellow) ;   
+    box-shadow: 5px 5px 5px  rgba(233, 221, 221, 0.25) ;
+    border-radius: 10px;
+  }
+
+
+  .b-example-divider {
+    height: 1px; /* Set a height for the divider */
+    background-color: #ccc; /* Light gray background color */
+    margin: 10px 0; /* Add spacing above and below */
+    border: none; /* Remove border */
+          /* i want this centered */
+  }

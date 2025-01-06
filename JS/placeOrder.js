@@ -27,7 +27,7 @@ window.onload = function () {
 };
 
 function getNextID() {
-  return "0" + currentOrderID.toString().padStart(3, "0");
+  return "O#" + currentOrderID.toString().padStart(3, "0");
 }
 
 function updateOrderID() {
@@ -355,6 +355,7 @@ function removeItem(index) {
   addCartToHtml();
 }
 
+let customerObj = {};
 const searchField = document.getElementById("searchField");
 
 searchField.addEventListener("keypress", function (e) {
@@ -362,10 +363,9 @@ searchField.addEventListener("keypress", function (e) {
     e.preventDefault();
     console.log("serarch ekata rady");
 
-    searchCustomer();
+    customerObj = searchCustomer();
   }
 });
-
 function searchCustomer() {
   console.log("serarch ekata awa");
   const searchValue = searchField.value.trim();
@@ -386,6 +386,8 @@ function searchCustomer() {
   orderArray.push({ customer: customer });
 
   console.log(" order array", orderArray);
+
+  return customer;
 }
 
 document.getElementById("placeOrderBtn").addEventListener("click", () => {
@@ -394,6 +396,8 @@ document.getElementById("placeOrderBtn").addEventListener("click", () => {
 });
 
 function placeOrder() {
+  console.log("customerObj", customerObj);
+
   // Retrieve values from dynamically generated table cells
   const subTotalElement = document.querySelector(
     "#totalTable tr:nth-child(1) td:nth-child(2)"

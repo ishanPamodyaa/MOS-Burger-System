@@ -10,22 +10,22 @@ console.log("Product data:", product);
 
 let selectedCatogary = "Burgers";
 
-// window.onload = function () {
-//   console.log(selectedCatogary);
-//   displayProductList(selectedCatogary);
-// };
-
-window.onload = async function () {
-  try {
-    if (!product) {
-      product = fetchProducts(); // Load product data
-    }
-    console.log("Products loaded:", product);
-    displayProductList(selectedCatogary);
-  } catch (error) {
-    console.error("Error loading products:", error);
-  }
+window.onload = function () {
+  console.log(selectedCatogary);
+  displayProductList(selectedCatogary);
 };
+
+// window.onload = async function () {
+//   try {
+//     if (!product) {
+//       product = fetchProducts(); // Load product data
+//     }
+//     console.log("Products loaded:", product);
+//     displayProductList(selectedCatogary);
+//   } catch (error) {
+//     console.error("Error loading products:", error);
+//   }
+// };
 
 //when select product catogery default catogery is Burger
 document
