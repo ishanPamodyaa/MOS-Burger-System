@@ -135,21 +135,42 @@ function displayProductList(catogary) {
   });
 }
 
+function checkProductEnabled(index) {
+  const currentDate = new Date();
+  const expDate = new Date(product[selectedCatogary][index].expiryDate);
+
+  console.log(expDate, currentDate);
+  let productEnabled;
+  if (expDate > currentDate && orderArray[0]) {
+    productEnabled = true;
+    console.log("productEnabled", productEnabled);
+  } else {
+    productEnabled = false;
+    console.log("productEnabled", productEnabled);
+  }
+  return productEnabled;
+}
+
 document
   .getElementById("productTile")
   .addEventListener("click", function (event) {
     const clickedCard = event.target.closest("#clickableCard");
+    const index = clickedCard.getAttribute("data-index");
+    console.log(
+      "clicked index:",
+      index,
+      selectedCatogary,
+      product[selectedCatogary][index].name
+    );
 
-    if (clickedCard) {
-      const index = clickedCard.getAttribute("data-index");
-      console.log(
-        "clicked index:",
-        index,
-        selectedCatogary,
-        product[selectedCatogary][index].name
-      );
+    let productEnabled = checkProductEnabled(index);
 
-      addToCart(selectedCatogary, index);
+    if (productEnabled) {
+      if (clickedCard) {
+        addToCart(selectedCatogary, index);
+      }
+    } else {
+      window.alert("Product is expired or customer is not selected");
     }
   });
 
@@ -427,7 +448,9 @@ function placeOrder() {
         style: "orderInfo",
       },
       {
-        text: `Customer Name: ${orderArray[0].customer.fName + " " + orderArray[0].customer.lName}`,
+        text: `Customer Name: ${
+          orderArray[0].customer.fName + " " + orderArray[0].customer.lName
+        }`,
         margin: [0, 0, 0, 5],
         style: "orderInfo",
       },
@@ -482,7 +505,6 @@ function placeOrder() {
         style: "total",
         margin: [0, 10, 0, 0],
       },
-
     ],
 
     // Styles
@@ -528,7 +550,6 @@ function placeOrder() {
         alignment: "right",
         color: "#dc6b19",
       },
-     
     },
   };
 
