@@ -362,8 +362,7 @@ function searchCustomer() {
     document.getElementById("location").value = customer.city;
   }
 
-  orderArray.push(
-    {customer : customer,} );
+  orderArray.push({ customer: customer });
 
   console.log(" order array", orderArray);
 }
@@ -408,24 +407,27 @@ function placeOrder() {
   });
 
   console.log("orderArray", orderArray);
-  console.log(orderArray[0].customer.fName );
+  console.log(orderArray[0].customer.fName);
   // cartData.length = 0;
   addCartToHtml();
   updateOrderID();
 
-
-
   var docDefinition = {
     content: [
       // Title and Order Info
-      { text: "Order Details", style: "header" },
+      { text: "MOS Burgers", style: "header" },
+      { text: "123, Galle Road, Colombo 03, Sri Lanka", style: "subHeader" },
+      { text: "(+94) 077 123 4567", style: "subHeader" },
+      { text: "contact@mosburgers.lk", style: "subHeader" },
+      { text: "www.mosburgers.lk", style: "subHeader" },
+
       {
-        text: `Order ID: ${orderArray.orderId}`,
+        text: `Order ID: ${orderArray[1].orderID}`,
         margin: [0, 10, 0, 5],
         style: "orderInfo",
       },
       {
-        text: `Customer Name: ${orderArray[0].customer.fName}`,
+        text: `Customer Name: ${orderArray[0].customer.fName + " " + orderArray[0].customer.lName}`,
         margin: [0, 0, 0, 5],
         style: "orderInfo",
       },
@@ -455,7 +457,7 @@ function placeOrder() {
           ],
         },
         layout: {
-          fillColor: (rowIndex) => (rowIndex === 0 ? "#dc6b19" : null),
+          fillColor: (rowIndex) => (rowIndex === 0 ? "#ee9f54" : null),
         },
       },
 
@@ -466,7 +468,7 @@ function placeOrder() {
         style: "summaryText",
       },
       {
-        text: `Subtotal: LKR ${orderArray[1].subtotal}`,
+        text: `Subtotal: LKR ${orderArray[1].subTotal}`,
         margin: [0, 0, 0, 5],
         style: "summaryText",
       },
@@ -481,12 +483,6 @@ function placeOrder() {
         margin: [0, 10, 0, 0],
       },
 
-      // Additional Notes
-      // {
-      //   text: `Additional Notes: ${additionalNotes}`,
-      //   margin: [0, 10, 0, 5],
-      //   style: "notes",
-      // },
     ],
 
     // Styles
@@ -498,10 +494,17 @@ function placeOrder() {
         margin: [0, 0, 0, 20],
         color: "#dc6b19",
       },
+      subHeader: {
+        fontSize: 12,
+        bold: true,
+        alignment: "center",
+        margin: [0, 0, 0, 3],
+        color: "#424242",
+      },
       orderInfo: {
         fontSize: 12,
         margin: [0, 5, 0, 5],
-        color: "#333333",
+        color: "#424242",
       },
       tableHeader: {
         bold: true,
@@ -511,13 +514,13 @@ function placeOrder() {
       },
       tableContent: {
         fontSize: 12,
-        color: "#333333",
+        color: "#424242",
         alignment: "center",
       },
       summaryText: {
         fontSize: 12,
         bold: true,
-        color: "#333333",
+        color: "#424242",
       },
       total: {
         fontSize: 16,
@@ -525,31 +528,26 @@ function placeOrder() {
         alignment: "right",
         color: "#dc6b19",
       },
-      notes: {
-        fontSize: 12,
-        italics: true,
-        color: "#888888",
-      },
+     
     },
   };
 
   // Add order items to the table
   cartData.forEach((item) => {
     if (item.quantity > 0) {
-      docDefinition.content[5].table.body.push([
+      const itemPrice = Number(item.item.price) || 0;
+      const itemQuantity = Number(item.quantity) || 0;
+      docDefinition.content[9].table.body.push([
         { text: item.item.name, style: "tableContent" },
-        { text: item.quantity, style: "tableContent" },
-        { text: `LKR ${item.item.price}`, style: "tableContent" },
-        {
-          text: `LKR ${(item.item.price * item.quantity)}`,
-          style: "tableContent",
-        },
+        { text: itemQuantity, style: "tableContent" },
+        { text: `LKR ${itemPrice}`, style: "tableContent" },
+        { text: `LKR ${itemPrice * itemQuantity}`, style: "tableContent" },
       ]);
     }
   });
 
   // Check if the table has items
-  if (docDefinition.content[5].table.body.length <= 1) {
+  if (docDefinition.content[9].table.body.length <= 1) {
     console.error("No items to display in the table.");
     return;
   }
@@ -595,144 +593,144 @@ function resetTotals() {
   console.log("Totals reset to zero");
 }
 
-function pdfBilGenaretor(){
- 
-
+function pdfBilGenaretor() {
   var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
-
 }
-  var props = {
-    outputType: jsPDFInvoiceTemplate.OutputType.Save,
-    onJsPDFDocCreation: function (jsPDFDoc) {
-      // Custom logic for jsPDF document manipulation
-      console.log("jsPDF document created:", jsPDFDoc);
+var props = {
+  outputType: jsPDFInvoiceTemplate.OutputType.Save,
+  onJsPDFDocCreation: function (jsPDFDoc) {
+    // Custom logic for jsPDF document manipulation
+    console.log("jsPDF document created:", jsPDFDoc);
   }, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
-    returnJsPDFDocObject: true,
-    fileName: "Invoice 2021",
-    orientationLandscape: false,
-    compress: true,
-    // logo: {
-    //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-    //     type: 'PNG', //optional, when src= data:uri (nodejs case)
-    //     width: 53.33, //aspect ratio = width/height
-    //     height: 26.66,
-    //     margin: {
-    //         top: 0, //negative or positive num, from the current position
-    //         left: 0 //negative or positive num, from the current position
-    //     }
-    // },
-    // stamp: {
-    //     inAllPages: true, //by default = false, just in the last page
-    //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-    //     type: 'JPG', //optional, when src= data:uri (nodejs case)
-    //     width: 20, //aspect ratio = width/height
-    //     height: 20,
-    //     margin: {
-    //         top: 0, //negative or positive num, from the current position
-    //         left: 0 //negative or positive num, from the current position
-    //     }
-    // },
-    business: {
-        name: "MOS Burgers",
-        address: "Albania, Tirane ish-Dogana, Durres 2001",
-        phone: "(+355) 069 11 11 111",
-        email: "email@example.com",
-        email_1: "info@example.al",
-        website: "www.example.al",
-    },
-    contact: {
-        label: "Bill issued for:",
-        name: "Client Name `${}`",
-        address: "Albania, Tirane, Astir",
-        phone: "(+355) 069 22 22 222",
-        email: "client@website.al",
-        otherInfo: "www.website.al",
-    },
-    invoice: {
-        label: "Invoice #: ",
-        num: 19,
-        invDate: "Payment Date: 01/01/2021 18:12",
-        invGenDate: "Invoice Date: 02/02/2021 10:17",
-        headerBorder: false,
-        tableBodyBorder: false,
-        header: [
-          {
-            title: "#", 
-            style: { 
-              width: 10 
-            } 
-          }, 
-          { 
-            title: "Title",
-            style: {
-              width: 30
-            } 
-          }, 
-          { 
-            title: "Description",
-            style: {
-              width: 80
-            } 
-          }, 
-          { title: "Price"},
-          { title: "Quantity"},
-          { title: "Unit"},
-          { title: "Total"}
-        ],
-        table: Array.from(Array(10), (item, index)=>([
-            index + 1,
-            "There are many variations ",
-            "Lorem Ipsum is simply dummy text dummy text ",
-            200.5,
-            4.5,
-            "m2",
-            400.5
-        ])),
-        additionalRows: [{
-            col1: 'Total:',
-            col2: '145,250.50',
-            col3: 'ALL',
-            style: {
-                fontSize: 14 //optional, default 12
-            }
+  returnJsPDFDocObject: true,
+  fileName: "Invoice 2021",
+  orientationLandscape: false,
+  compress: true,
+  // logo: {
+  //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+  //     type: 'PNG', //optional, when src= data:uri (nodejs case)
+  //     width: 53.33, //aspect ratio = width/height
+  //     height: 26.66,
+  //     margin: {
+  //         top: 0, //negative or positive num, from the current position
+  //         left: 0 //negative or positive num, from the current position
+  //     }
+  // },
+  // stamp: {
+  //     inAllPages: true, //by default = false, just in the last page
+  //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+  //     type: 'JPG', //optional, when src= data:uri (nodejs case)
+  //     width: 20, //aspect ratio = width/height
+  //     height: 20,
+  //     margin: {
+  //         top: 0, //negative or positive num, from the current position
+  //         left: 0 //negative or positive num, from the current position
+  //     }
+  // },
+  business: {
+    name: "MOS Burgers",
+    address: "Albania, Tirane ish-Dogana, Durres 2001",
+    phone: "(+355) 069 11 11 111",
+    email: "email@example.com",
+    email_1: "info@example.al",
+    website: "www.example.al",
+  },
+  contact: {
+    label: "Bill issued for:",
+    name: "Client Name `${}`",
+    address: "Albania, Tirane, Astir",
+    phone: "(+355) 069 22 22 222",
+    email: "client@website.al",
+    otherInfo: "www.website.al",
+  },
+  invoice: {
+    label: "Invoice #: ",
+    num: 19,
+    invDate: "Payment Date: 01/01/2021 18:12",
+    invGenDate: "Invoice Date: 02/02/2021 10:17",
+    headerBorder: false,
+    tableBodyBorder: false,
+    header: [
+      {
+        title: "#",
+        style: {
+          width: 10,
         },
-        {
-            col1: 'VAT:',
-            col2: '20',
-            col3: '%',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
+      },
+      {
+        title: "Title",
+        style: {
+          width: 30,
         },
-        {
-            col1: 'SubTotal:',
-            col2: '116,199.90',
-            col3: 'ALL',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
-        }],
-        invDescLabel: "Invoice Note",
-        invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-    },
-    footer: {
-        text: "The invoice is created on a computer and is valid without the signature and stamp.",
-    },
-    pageEnable: true,
-    pageLabel: "Page ",
-    onJsPDFDocCreation: (doc) => {
-      const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
-      const centerX = pageWidth / 2; // Calculate center of page
+      },
+      {
+        title: "Description",
+        style: {
+          width: 80,
+        },
+      },
+      { title: "Price" },
+      { title: "Quantity" },
+      { title: "Unit" },
+      { title: "Total" },
+    ],
+    table: Array.from(Array(10), (item, index) => [
+      index + 1,
+      "There are many variations ",
+      "Lorem Ipsum is simply dummy text dummy text ",
+      200.5,
+      4.5,
+      "m2",
+      400.5,
+    ]),
+    additionalRows: [
+      {
+        col1: "Total:",
+        col2: "145,250.50",
+        col3: "ALL",
+        style: {
+          fontSize: 14, //optional, default 12
+        },
+      },
+      {
+        col1: "VAT:",
+        col2: "20",
+        col3: "%",
+        style: {
+          fontSize: 10, //optional, default 12
+        },
+      },
+      {
+        col1: "SubTotal:",
+        col2: "116,199.90",
+        col3: "ALL",
+        style: {
+          fontSize: 10, //optional, default 12
+        },
+      },
+    ],
+    invDescLabel: "Invoice Note",
+    invDesc:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+  },
+  footer: {
+    text: "The invoice is created on a computer and is valid without the signature and stamp.",
+  },
+  pageEnable: true,
+  pageLabel: "Page ",
+  onJsPDFDocCreation: (doc) => {
+    const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+    const centerX = pageWidth / 2; // Calculate center of page
 
-      // Add centered business information
-      doc.setFontSize(14);
-      doc.text("Business Name", centerX, 20, { align: "center" });
-      doc.setFontSize(12);
-      doc.text("Albania, Tirane ish-Dogana, Durres 2001", centerX, 28, { align: "center" });
-      doc.text("(+355) 069 11 11 111", centerX, 36, { align: "center" });
-      doc.text("email@example.com", centerX, 44, { align: "center" });
-      doc.text("www.example.al", centerX, 52, { align: "center" });
+    // Add centered business information
+    doc.setFontSize(14);
+    doc.text("Business Name", centerX, 20, { align: "center" });
+    doc.setFontSize(12);
+    doc.text("Albania, Tirane ish-Dogana, Durres 2001", centerX, 28, {
+      align: "center",
+    });
+    doc.text("(+355) 069 11 11 111", centerX, 36, { align: "center" });
+    doc.text("email@example.com", centerX, 44, { align: "center" });
+    doc.text("www.example.al", centerX, 52, { align: "center" });
   },
 };
-
-

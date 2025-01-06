@@ -49,7 +49,7 @@ body .text-success {
 }
 
 .inputField  input {
-  background-color: rgba(51, 51, 51, 0.096) !important;
+  background-color: #33333318 !important;
   border: 1px solid var(--primary-color-RedMixYellow) !important;
   box-shadow: 5px 5px 5px rgba(233, 221, 221, 0.25);
   backdrop-filter: blur(3px);
