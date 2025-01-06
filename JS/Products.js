@@ -11,8 +11,8 @@ console.log("Product data:", product);
 let selectedCatogary = "Burgers";
 
 window.onload = function () {
+  console.log("cat select", selectedCatogary);
   displayProductList(selectedCatogary);
-  console.log(selectedCatogary);
 };
 
 // window.onload = async function () {
