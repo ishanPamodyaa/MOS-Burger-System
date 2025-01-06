@@ -31,30 +31,30 @@ window.onload = function () {
 //when select product catogery default catogery is Burger
 document
   .getElementById("burgers")
-  .addEventListener("click", displayProductList.bind(null, "Burgers"));
+  .addEventListener("click", displayProductList.bind("Burgers"));
 
 document
   .getElementById("submarines")
-  .addEventListener("click", displayProductList.bind(null, "Submarines"));
+  .addEventListener("click", displayProductList.bind("Submarines"));
 
 document
   .getElementById("fries")
-  .addEventListener("click", displayProductList.bind(null, "Fries"));
+  .addEventListener("click", displayProductList.bind("Fries"));
 
 document
   .getElementById("pasta")
-  .addEventListener("click", displayProductList.bind(null, "Pasta"));
+  .addEventListener("click", displayProductList.bind("Pasta"));
 
 document
   .getElementById("chicken")
-  .addEventListener("click", displayProductList.bind(null, "Chicken"));
+  .addEventListener("click", displayProductList.bind("Chicken"));
 
 document
   .getElementById("beverages")
-  .addEventListener("click", displayProductList.bind(null, "Beverages"));
+  .addEventListener("click", displayProductList.bind("Beverages"));
 
 function displayProductList(catogary) {
-  console.log("display ekata awa");
+  console.log("display ekata awa ", catogary);
 
   selectedCatogary = catogary;
 
