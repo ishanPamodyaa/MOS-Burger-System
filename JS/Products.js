@@ -10,10 +10,21 @@ console.log("Product data:", product);
 
 let selectedCatogary = "Burgers";
 
-window.onload = function () {
-  displayProductList(selectedCatogary);
-};
+// window.onload = function () {
+//   displayProductList(selectedCatogary);
+// };
 
+window.onload = async function () {
+  try {
+    // Load product data if it's coming from an external source
+    if (!product) {
+      product = await fetchProducts(); // Replace with your data fetching logic
+    }
+    displayProductList(catogary);
+  } catch (error) {
+    console.error("Error loading products:", error);
+  }
+};
 
 
 
