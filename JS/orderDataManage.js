@@ -14,7 +14,7 @@ let orderData = [
         joinDate: "2023-03-02",
         img: "../image/cutomer icon/men.png",
         gender: "Male",
-      },
+      }
     ],
     items: [
       {
@@ -269,6 +269,10 @@ let orderData = [
     total: 3320.0,
   },
 ];
+
+
+
+
 export function fetchOrders() {
   readOrdersFromStorage();
   return orderData;
