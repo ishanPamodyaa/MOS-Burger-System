@@ -21,6 +21,7 @@ window.onload = async function () {
       product = await fetchProducts(); // Replace with your data fetching logic
     }
     displayProductList(selectedCatogary);
+    console.log(selectedCatogary);
   } catch (error) {
     console.error("Error loading products:", error);
   }
