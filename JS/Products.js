@@ -55,93 +55,87 @@ document
 
 
 
-function displayProductList(catogary) {
-  console.log("display ekata awa");
-
-  selectedCatogary = catogary;
-
-  console.log("Selected catogary:", selectedCatogary, catogary);
-
-  // const selectedCatogarye = product[catogary];
-
-  const dynamicProductTile = document.getElementById("productTile");
-  dynamicProductTile.innerHTML = "";
-
-  if (!selectedCatogary) return;
-
-  product[catogary].forEach((item, index) => {
-    const productTile = document.createElement("div");
-    productTile.classList.add(
-      "col",
-      "col-sm",
-      "col-md-4",
-      "col-lg-3",
-      "col-xl-2",
-      "mt-3",
-      "custom-card-col"
-    );
-
-    productTile.innerHTML = `
-
-            <div class="card card-custom"  >
-                    <div class="imgDiv">
-                        <img src="${item.img}" class="card-img-top"
-                            alt="${item.name}" cap">
-                    </div>
-                    <div class="card-body cardBody">
-                        <div class="nameDiv">
-                            <p class="productName">${item.name}</p>
-                        </div>
-                        <div class="priceDiv" >
-                            <h5 class="price text-center fw-bold ">LKR ${item.price}</h5>
-                        </div>
-                        <div class="d-flex justify-content-sm-between flex-row ">
-                            
-   
-                                <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit" aria-hidden="true"></i>
-                                <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete" aria-hidden="true"></i>
-                                <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop" aria-hidden="true"></i>
-                            </div>
-                        <div class="dateDiv pt-2" data-index="${index}">
-                                <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    `;
-
-    dynamicProductTile.appendChild(productTile);
-  });
-
-  const dataDives = document.querySelectorAll(".dateDiv");
-  const currentDate = new Date();
-  dataDives.forEach((div) => {
-    const pElement = div.querySelector("p");
-    const expDate = new Date(pElement.textContent.trim());
-
-    if (expDate < currentDate) {
-      pElement.classList.add("expired");
-    } else {
-      pElement.classList.add("not-expired");
+  function displayProductList(category) {
+    // Validate product and category
+    if (!product || !product[category]) {
+      console.error(`Category "${category}" not found or product is undefined.`);
+      dynamicProductTile.innerHTML = "<p>No products available in this category.</p>";
+      return;
     }
-  });
-
-  document.querySelectorAll(".icon").forEach((icon) => {
-    icon.addEventListener("click", (evt) => {
-      const action = evt.target.dataset.action;
-      const index = evt.target.dataset.index;
-
-      if (action == "edit") {
-        editProduct(index, catogary);
-      } else if (action == "delete") {
-        removeProduct(index, catogary);
-        displayProductList(catogary);
-      } else if (action == "shop") {
-        //
+  
+    dynamicProductTile.innerHTML = ""; // Clear existing products
+  
+    product[category].forEach((item, index) => {
+      const productTile = document.createElement("div");
+      productTile.classList.add(
+        "col",
+        "col-sm",
+        "col-md-4",
+        "col-lg-3",
+        "col-xl-2",
+        "mt-3",
+        "custom-card-col"
+      );
+  
+      productTile.innerHTML = `
+              <div class="card card-custom">
+                  <div class="imgDiv">
+                      <img src="${item.img}" class="card-img-top" alt="${item.name}">
+                  </div>
+                  <div class="card-body cardBody">
+                      <div class="nameDiv">
+                          <p class="productName">${item.name}</p>
+                      </div>
+                      <div class="priceDiv">
+                          <h5 class="price text-center fw-bold">LKR ${item.price}</h5>
+                      </div>
+                      <div class="d-flex justify-content-sm-between flex-row">
+                          <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit"></i>
+                          <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete"></i>
+                          <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop"></i>
+                      </div>
+                      <div class="dateDiv pt-2" data-index="${index}">
+                          <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
+                      </div>
+                  </div>
+              </div>
+          `;
+  
+      dynamicProductTile.appendChild(productTile);
+    });
+  
+    // Highlight expired and not expired products
+    const dataDives = document.querySelectorAll(".dateDiv");
+    const currentDate = new Date();
+    dataDives.forEach((div) => {
+      const pElement = div.querySelector("p");
+      const expDate = new Date(pElement.textContent.trim());
+  
+      if (expDate < currentDate) {
+        pElement.classList.add("expired");
+      } else {
+        pElement.classList.add("not-expired");
       }
     });
-  });
-}
+  
+    // Add event listeners to action icons
+    document.querySelectorAll(".icon").forEach((icon) => {
+      icon.addEventListener("click", (evt) => {
+        const action = evt.target.dataset.action;
+        const index = evt.target.dataset.index;
+  
+        if (action === "edit") {
+          editProduct(index, category);
+        } else if (action === "delete") {
+          removeProduct(index, category);
+          displayProductList(category); // Refresh product list
+        } else if (action === "shop") {
+          // Implement shop action
+        }
+      });
+    });
+  }
+  
 
 document
   .getElementById("addProductForm")
