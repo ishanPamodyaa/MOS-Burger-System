@@ -10,51 +10,50 @@ console.log("Product data:", product);
 
 let selectedCatogary = "Burgers";
 
-window.onload = function () {
-  console.log("cat select", selectedCatogary);
-  displayProductList(selectedCatogary);
-};
-
-// window.onload = async function () {
-//   try {
-//     // Load product data if it's coming from an external source
-//     if (!product) {
-//       product = await fetchProducts(); // Replace with your data fetching logic
-//     }
-//     displayProductList(selectedCatogary);
-//     console.log(selectedCatogary);
-//   } catch (error) {
-//     console.error("Error loading products:", error);
-//   }
+// window.onload = function () {
+//   console.log(selectedCatogary);
+//   displayProductList(selectedCatogary);
 // };
+
+window.onload = async function () {
+  try {
+    if (!product) {
+      product = fetchProducts(); // Load product data
+    }
+    console.log("Products loaded:", product);
+    displayProductList(selectedCatogary);
+  } catch (error) {
+    console.error("Error loading products:", error);
+  }
+};
 
 //when select product catogery default catogery is Burger
 document
   .getElementById("burgers")
-  .addEventListener("click", displayProductList.bind("Burgers"));
+  .addEventListener("click", displayProductList.bind(null, "Burgers"));
 
 document
   .getElementById("submarines")
-  .addEventListener("click", displayProductList.bind("Submarines"));
+  .addEventListener("click", displayProductList.bind(null, "Submarines"));
 
 document
   .getElementById("fries")
-  .addEventListener("click", displayProductList.bind("Fries"));
+  .addEventListener("click", displayProductList.bind(null, "Fries"));
 
 document
   .getElementById("pasta")
-  .addEventListener("click", displayProductList.bind("Pasta"));
+  .addEventListener("click", displayProductList.bind(null, "Pasta"));
 
 document
   .getElementById("chicken")
-  .addEventListener("click", displayProductList.bind("Chicken"));
+  .addEventListener("click", displayProductList.bind(null, "Chicken"));
 
 document
   .getElementById("beverages")
-  .addEventListener("click", displayProductList.bind("Beverages"));
+  .addEventListener("click", displayProductList.bind(null, "Beverages"));
 
 function displayProductList(catogary) {
-  console.log("display ekata awa ", catogary);
+  console.log("display ekata awa");
 
   selectedCatogary = catogary;
 
