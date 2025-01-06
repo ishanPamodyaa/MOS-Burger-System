@@ -16,7 +16,7 @@ let orderData = [
         gender: "Male",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B1001",
         name: "Classic Burger",
@@ -67,7 +67,7 @@ let orderData = [
         gender: "Female",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B10011",
         name: "Double Cheese Chicken Submarine",
@@ -109,7 +109,7 @@ let orderData = [
         gender: "Female",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B10018",
         name: "Chicken Cheese Pasta",
@@ -159,7 +159,7 @@ let orderData = [
         gender: "Male",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B1009",
         name: "Double Cheese Burger",
@@ -201,7 +201,7 @@ let orderData = [
         gender: "Male",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B10012",
         name: "MOS Special Submarine",
@@ -243,7 +243,7 @@ let orderData = [
         gender: "Female",
       },
     ],
-    cartData: [
+    items: [
       {
         itemCode: "B1002",
         name: "Turkey Burger",

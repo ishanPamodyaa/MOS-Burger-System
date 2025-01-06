@@ -10,6 +10,8 @@ import {
   removeProduct,
 } from "./productDataManage.js";
 
+import { fetchOrders, addOrder, removeOrder } from "./orderDataManage.js";
+
 let uploadedImage = "";
 const product = fetchProducts();
 console.log("Product data:", product);
@@ -68,13 +70,11 @@ document
   .addEventListener("click", displayProductList.bind(null, "Beverages"));
 
 function displayProductList(catogary) {
-  console.log("display ekata awa");
 
   selectedCatogary = catogary;
 
   console.log("Selected catogary:", selectedCatogary, catogary);
 
-  // const selectedCatogarye = product[catogary];
 
   const dynamicProductTile = document.getElementById("productTile");
   dynamicProductTile.innerHTML = "";
@@ -139,14 +139,14 @@ function checkProductEnabled(index) {
   const currentDate = new Date();
   const expDate = new Date(product[selectedCatogary][index].expiryDate);
 
-  console.log(expDate, currentDate);
+  // console.log(expDate, currentDate);
   let productEnabled;
-  if (expDate > currentDate && orderArray[0]) {
+  if (expDate > currentDate && customerObj) {
     productEnabled = true;
-    console.log("productEnabled", productEnabled);
+    // console.log("productEnabled", productEnabled);
   } else {
     productEnabled = false;
-    console.log("productEnabled", productEnabled);
+    // console.log("productEnabled", productEnabled);
   }
   return productEnabled;
 }
@@ -156,12 +156,7 @@ document
   .addEventListener("click", function (event) {
     const clickedCard = event.target.closest("#clickableCard");
     const index = clickedCard.getAttribute("data-index");
-    console.log(
-      "clicked index:",
-      index,
-      selectedCatogary,
-      product[selectedCatogary][index].name
-    );
+  
 
     let productEnabled = checkProductEnabled(index);
 
@@ -175,15 +170,12 @@ document
   });
 
 function addToCart(catogary, index) {
-  console.log("add to cart ekata awa");
 
   let productPotitionInCart = cartData.findIndex(
     (cartItem) =>
       cartItem.item.itemCode === product[selectedCatogary][index].itemCode
   );
-  console.log("indexes ", productPotitionInCart);
 
-  // const dynamicCartItem=document.getElementById("cartTable")
   if (cartData.length <= 0) {
     cartData = [
       {
@@ -205,7 +197,6 @@ function addToCart(catogary, index) {
 }
 
 function addCartToHtml(catogary, index) {
-  console.log("add to cart html ekata awa");
   const dynamicCartItem = document.getElementById("cartTable");
   const totalCount = document.getElementById("totalCount");
 
@@ -219,11 +210,8 @@ function addCartToHtml(catogary, index) {
   totalCount.innerHTML = "Total Items : " + totalItemCount;
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
-      //   totalQty += item.quantity;
       let produuctItem = cartData[index].item;
-      console.log("product item", produuctItem);
-      console.log("cart data", cartData);
-      console.log("cart data", cartData[index].item.name);
+     
 
       const cartItem = document.createElement("div");
       cartItem.classList.add(
@@ -276,22 +264,13 @@ function addCartToHtml(catogary, index) {
           </div>
         `;
       dynamicCartItem.appendChild(cartItem);
-      //   console.log("ptice" , produuctItem.price);
-      console.log(
-        produuctItem.name,
-        produuctItem.price,
-        produuctItem.discount,
-        item.quantity
-      );
+   
       priceItems = priceItems + produuctItem.price * item.quantity;
       discountItems =
         discountItems +
         (produuctItem.price * produuctItem.discount * item.quantity) / 100;
 
-      console.log("priceItems", priceItems);
-      console.log("discountItems", discountItems);
       const subTotal = priceItems - discountItems;
-      console.log("sub total", subTotal);
 
       const totaTable = document.getElementById("totalTable");
       totaTable.innerHTML = `
@@ -312,13 +291,10 @@ function addCartToHtml(catogary, index) {
             </td>
         </tr>
     `;
-      // totalCount.innerHTML = cartData.length-1;
-      console.log("cart data", cartData.length, "awaaaaaaaaaaaaaaaaaaaaaaaaa");
 
       document
         .getElementById(`minus-${index}`)
         .addEventListener("click", () => changeQuantity(index, -1));
-      console.log("- eka ebuwa");
 
       document
         .getElementById(`plus-${index}`)
@@ -326,13 +302,10 @@ function addCartToHtml(catogary, index) {
       document
         .getElementById(`delete-${index}`)
         .addEventListener("click", () => removeItem(index));
-      console.log("total ekta kalin");
     });
 
     priceItems, discountItems, subTotal;
-    console.log("Updated orderArray:", orderArray);
   }
-  //   orderArray.push(priceItems,discountItems,subTotal);
 }
 
 function changeQuantity(index, change) {
@@ -361,13 +334,11 @@ const searchField = document.getElementById("searchField");
 searchField.addEventListener("keypress", function (e) {
   if (e.key == "Enter") {
     e.preventDefault();
-    console.log("serarch ekata rady");
 
     customerObj = searchCustomer();
   }
 });
 function searchCustomer() {
-  console.log("serarch ekata awa");
   const searchValue = searchField.value.trim();
   let customerData = fetchCustomers();
   const customer = customerData.find(
@@ -383,9 +354,8 @@ function searchCustomer() {
     document.getElementById("location").value = customer.city;
   }
 
-  orderArray.push({ customer: customer });
+  // orderArray.push({ customer: customer });
 
-  console.log(" order array", orderArray);
 
   return customer;
 }
@@ -396,9 +366,7 @@ document.getElementById("placeOrderBtn").addEventListener("click", () => {
 });
 
 function placeOrder() {
-  console.log("customerObj", customerObj);
-
-  // Retrieve values from dynamically generated table cells
+  const totalItems = cartData.length;
   const subTotalElement = document.querySelector(
     "#totalTable tr:nth-child(1) td:nth-child(2)"
   );
@@ -422,18 +390,21 @@ function placeOrder() {
   const orderDate = currentDate;
   const orderId = getNextID();
 
-  orderArray.push({
-    orderID: orderId,
+  const newOrder = {
+    customer: customerObj,
+    orderId: orderId,
     orderDate: orderDate,
+    totalItems: totalItems,
     items: cartData,
     subTotal: subTotal,
     discount: discount,
-    amount: amount,
-  });
+    total: amount,
+  };
 
-  console.log("orderArray", orderArray);
-  console.log(orderArray[0].customer.fName);
-  // cartData.length = 0;
+  addOrder(newOrder);
+
+  console.log("newOrder", newOrder);
+
   addCartToHtml();
   updateOrderID();
 
@@ -447,24 +418,24 @@ function placeOrder() {
       { text: "www.mosburgers.lk", style: "subHeader" },
 
       {
-        text: `Order ID: ${orderArray[1].orderID}`,
+        text: `Order ID: ${newOrder.orderId}`,
         margin: [0, 10, 0, 5],
         style: "orderInfo",
       },
       {
         text: `Customer Name: ${
-          orderArray[0].customer.fName + " " + orderArray[0].customer.lName
+          newOrder.customer.fName + " " + newOrder.customer.lName
         }`,
         margin: [0, 0, 0, 5],
         style: "orderInfo",
       },
       {
-        text: `Phone Number: ${orderArray[0].customer.primaryContact}`,
+        text: `Phone Number: ${newOrder.customer.primaryContact}`,
         margin: [0, 0, 0, 5],
         style: "orderInfo",
       },
       {
-        text: `Address: ${orderArray[0].customer.address}`,
+        text: `Address: ${newOrder.customer.address}`,
         margin: [0, 0, 0, 15],
         style: "orderInfo",
       },
@@ -490,22 +461,22 @@ function placeOrder() {
 
       // Summary section
       {
-        text: `Total Items: ${cartData.length}`,
+        text: `Total Items: ${newOrder.totalItems}`,
         margin: [0, 10, 0, 5],
         style: "summaryText",
       },
       {
-        text: `Subtotal: LKR ${orderArray[1].subTotal}`,
+        text: `Subtotal: LKR ${newOrder.subTotal}`,
         margin: [0, 0, 0, 5],
         style: "summaryText",
       },
       {
-        text: `Discount: LKR ${orderArray[1].discount}`,
+        text: `Discount: LKR ${newOrder.discount}`,
         margin: [0, 0, 0, 5],
         style: "summaryText",
       },
       {
-        text: `Total: LKR ${orderArray[1].amount}`,
+        text: `Total: LKR ${newOrder.total}`,
         style: "total",
         margin: [0, 10, 0, 0],
       },
@@ -558,10 +529,13 @@ function placeOrder() {
   };
 
   // Add order items to the table
-  cartData.forEach((item) => {
+  newOrder.items.forEach((item) => {
+
     if (item.quantity > 0) {
       const itemPrice = Number(item.item.price) || 0;
+
       const itemQuantity = Number(item.quantity) || 0;
+
       docDefinition.content[9].table.body.push([
         { text: item.item.name, style: "tableContent" },
         { text: itemQuantity, style: "tableContent" },
@@ -584,7 +558,6 @@ function placeOrder() {
 
 document.getElementById("canselBtn").addEventListener("click", () => {
   clearOrder();
-  console.log(" order btn clicked");
 });
 
 function clearOrder() {
@@ -615,147 +588,4 @@ function resetTotals() {
   if (discountElement) discountElement.innerHTML = "LKR 0.00";
   if (amountElement) amountElement.innerHTML = "<h4>LKR 0.00</h4>";
 
-  console.log("Totals reset to zero");
 }
-
-function pdfBilGenaretor() {
-  var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
-}
-var props = {
-  outputType: jsPDFInvoiceTemplate.OutputType.Save,
-  onJsPDFDocCreation: function (jsPDFDoc) {
-    // Custom logic for jsPDF document manipulation
-    console.log("jsPDF document created:", jsPDFDoc);
-  }, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
-  returnJsPDFDocObject: true,
-  fileName: "Invoice 2021",
-  orientationLandscape: false,
-  compress: true,
-  // logo: {
-  //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-  //     type: 'PNG', //optional, when src= data:uri (nodejs case)
-  //     width: 53.33, //aspect ratio = width/height
-  //     height: 26.66,
-  //     margin: {
-  //         top: 0, //negative or positive num, from the current position
-  //         left: 0 //negative or positive num, from the current position
-  //     }
-  // },
-  // stamp: {
-  //     inAllPages: true, //by default = false, just in the last page
-  //     src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-  //     type: 'JPG', //optional, when src= data:uri (nodejs case)
-  //     width: 20, //aspect ratio = width/height
-  //     height: 20,
-  //     margin: {
-  //         top: 0, //negative or positive num, from the current position
-  //         left: 0 //negative or positive num, from the current position
-  //     }
-  // },
-  business: {
-    name: "MOS Burgers",
-    address: "Albania, Tirane ish-Dogana, Durres 2001",
-    phone: "(+355) 069 11 11 111",
-    email: "email@example.com",
-    email_1: "info@example.al",
-    website: "www.example.al",
-  },
-  contact: {
-    label: "Bill issued for:",
-    name: "Client Name `${}`",
-    address: "Albania, Tirane, Astir",
-    phone: "(+355) 069 22 22 222",
-    email: "client@website.al",
-    otherInfo: "www.website.al",
-  },
-  invoice: {
-    label: "Invoice #: ",
-    num: 19,
-    invDate: "Payment Date: 01/01/2021 18:12",
-    invGenDate: "Invoice Date: 02/02/2021 10:17",
-    headerBorder: false,
-    tableBodyBorder: false,
-    header: [
-      {
-        title: "#",
-        style: {
-          width: 10,
-        },
-      },
-      {
-        title: "Title",
-        style: {
-          width: 30,
-        },
-      },
-      {
-        title: "Description",
-        style: {
-          width: 80,
-        },
-      },
-      { title: "Price" },
-      { title: "Quantity" },
-      { title: "Unit" },
-      { title: "Total" },
-    ],
-    table: Array.from(Array(10), (item, index) => [
-      index + 1,
-      "There are many variations ",
-      "Lorem Ipsum is simply dummy text dummy text ",
-      200.5,
-      4.5,
-      "m2",
-      400.5,
-    ]),
-    additionalRows: [
-      {
-        col1: "Total:",
-        col2: "145,250.50",
-        col3: "ALL",
-        style: {
-          fontSize: 14, //optional, default 12
-        },
-      },
-      {
-        col1: "VAT:",
-        col2: "20",
-        col3: "%",
-        style: {
-          fontSize: 10, //optional, default 12
-        },
-      },
-      {
-        col1: "SubTotal:",
-        col2: "116,199.90",
-        col3: "ALL",
-        style: {
-          fontSize: 10, //optional, default 12
-        },
-      },
-    ],
-    invDescLabel: "Invoice Note",
-    invDesc:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-  },
-  footer: {
-    text: "The invoice is created on a computer and is valid without the signature and stamp.",
-  },
-  pageEnable: true,
-  pageLabel: "Page ",
-  onJsPDFDocCreation: (doc) => {
-    const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
-    const centerX = pageWidth / 2; // Calculate center of page
-
-    // Add centered business information
-    doc.setFontSize(14);
-    doc.text("Business Name", centerX, 20, { align: "center" });
-    doc.setFontSize(12);
-    doc.text("Albania, Tirane ish-Dogana, Durres 2001", centerX, 28, {
-      align: "center",
-    });
-    doc.text("(+355) 069 11 11 111", centerX, 36, { align: "center" });
-    doc.text("email@example.com", centerX, 44, { align: "center" });
-    doc.text("www.example.al", centerX, 52, { align: "center" });
-  },
-};
