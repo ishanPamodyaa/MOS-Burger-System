@@ -26,8 +26,6 @@ window.onload = async function () {
   }
 };
 
-
-
 //when select product catogery default catogery is Burger
 document
   .getElementById("burgers")
@@ -53,89 +51,87 @@ document
   .getElementById("beverages")
   .addEventListener("click", displayProductList.bind(null, "Beverages"));
 
+function displayProductList(category) {
+  // Validate product and category
+  if (!product || !product[category]) {
+    console.error(`Category "${category}" not found or product is undefined.`);
+    dynamicProductTile.innerHTML =
+      "<p>No products available in this category.</p>";
+    return;
+  }
 
+  dynamicProductTile.innerHTML = ""; // Clear existing products
 
-  function displayProductList(category) {
-    // Validate product and category
-    if (!product || !product[category]) {
-      console.error(`Category "${category}" not found or product is undefined.`);
-      dynamicProductTile.innerHTML = "<p>No products available in this category.</p>";
-      return;
+  product[category].forEach((item, index) => {
+    const productTile = document.createElement("div");
+    productTile.classList.add(
+      "col",
+      "col-sm",
+      "col-md-4",
+      "col-lg-3",
+      "col-xl-2",
+      "mt-3",
+      "custom-card-col"
+    );
+
+    productTile.innerHTML = `
+            <div class="card card-custom">
+                <div class="imgDiv">
+                    <img src="${item.img}" class="card-img-top" alt="${item.name}">
+                </div>
+                <div class="card-body cardBody">
+                    <div class="nameDiv">
+                        <p class="productName">${item.name}</p>
+                    </div>
+                    <div class="priceDiv">
+                        <h5 class="price text-center fw-bold">LKR ${item.price}</h5>
+                    </div>
+                    <div class="d-flex justify-content-sm-between flex-row">
+                        <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit"></i>
+                        <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete"></i>
+                        <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop"></i>
+                    </div>
+                    <div class="dateDiv pt-2" data-index="${index}">
+                        <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+    dynamicProductTile.appendChild(productTile);
+  });
+
+  // Highlight expired and not expired products
+  const dataDives = document.querySelectorAll(".dateDiv");
+  const currentDate = new Date();
+  dataDives.forEach((div) => {
+    const pElement = div.querySelector("p");
+    const expDate = new Date(pElement.textContent.trim());
+
+    if (expDate < currentDate) {
+      pElement.classList.add("expired");
+    } else {
+      pElement.classList.add("not-expired");
     }
-  
-    dynamicProductTile.innerHTML = ""; // Clear existing products
-  
-    product[category].forEach((item, index) => {
-      const productTile = document.createElement("div");
-      productTile.classList.add(
-        "col",
-        "col-sm",
-        "col-md-4",
-        "col-lg-3",
-        "col-xl-2",
-        "mt-3",
-        "custom-card-col"
-      );
-  
-      productTile.innerHTML = `
-              <div class="card card-custom">
-                  <div class="imgDiv">
-                      <img src="${item.img}" class="card-img-top" alt="${item.name}">
-                  </div>
-                  <div class="card-body cardBody">
-                      <div class="nameDiv">
-                          <p class="productName">${item.name}</p>
-                      </div>
-                      <div class="priceDiv">
-                          <h5 class="price text-center fw-bold">LKR ${item.price}</h5>
-                      </div>
-                      <div class="d-flex justify-content-sm-between flex-row">
-                          <i class="fa fa-pencil-square-o fa-2x icon" data-index="${index}" data-action="edit"></i>
-                          <i class="fa fa-trash-o fa-2x icon" data-index="${index}" data-action="delete"></i>
-                          <i class="fa fa-shopping-cart fa-2x icon" data-index="${index}" data-action="shop"></i>
-                      </div>
-                      <div class="dateDiv pt-2" data-index="${index}">
-                          <p class="text-center fw-bold mb-0">${item.expiryDate}</p>
-                      </div>
-                  </div>
-              </div>
-          `;
-  
-      dynamicProductTile.appendChild(productTile);
-    });
-  
-    // Highlight expired and not expired products
-    const dataDives = document.querySelectorAll(".dateDiv");
-    const currentDate = new Date();
-    dataDives.forEach((div) => {
-      const pElement = div.querySelector("p");
-      const expDate = new Date(pElement.textContent.trim());
-  
-      if (expDate < currentDate) {
-        pElement.classList.add("expired");
-      } else {
-        pElement.classList.add("not-expired");
+  });
+
+  // Add event listeners to action icons
+  document.querySelectorAll(".icon").forEach((icon) => {
+    icon.addEventListener("click", (evt) => {
+      const action = evt.target.dataset.action;
+      const index = evt.target.dataset.index;
+
+      if (action === "edit") {
+        editProduct(index, category);
+      } else if (action === "delete") {
+        removeProduct(index, category);
+        displayProductList(category); // Refresh product list
+      } else if (action === "shop") {
+        // Implement shop action
       }
     });
-  
-    // Add event listeners to action icons
-    document.querySelectorAll(".icon").forEach((icon) => {
-      icon.addEventListener("click", (evt) => {
-        const action = evt.target.dataset.action;
-        const index = evt.target.dataset.index;
-  
-        if (action === "edit") {
-          editProduct(index, category);
-        } else if (action === "delete") {
-          removeProduct(index, category);
-          displayProductList(category); // Refresh product list
-        } else if (action === "shop") {
-          // Implement shop action
-        }
-      });
-    });
-  }
-  
+  });
+}
 
 document
   .getElementById("addProductForm")
@@ -210,10 +206,8 @@ function previewImage(event) {
       imagePreview.src = e.target.result;
       imagePreview.style.display = "block";
       uploadedImage = e.target.result;
-      console.log("e.target.result;",e.target.result);
+      console.log("e.target.result;", e.target.result);
       console.log("uploadedImage", uploadedImage);
-      
-      
     };
     reader.readAsDataURL(file);
   }
@@ -276,8 +270,6 @@ function updateProduct(newProduct, index, catogary) {
   editIcon.addEventListener("click", (evt) => {
     editProduct(index, catogary);
     console.log("Edit eken passe");
-    
-  
   });
 
   deleteIcon.addEventListener("click", (evt) => {
@@ -313,8 +305,6 @@ function editProduct(index, catogary) {
   }
   console.log("image eekaa ", productToEdit.img);
 
-
- 
   // Populate form fields with the selected product's data
   document.getElementById("itemCode").value = productToEdit.itemCode;
   document.getElementById("itemName").value = productToEdit.name;
@@ -325,9 +315,7 @@ function editProduct(index, catogary) {
 
   document.getElementById("imagePreview").src = productToEdit.img;
   document.getElementById("imagePreview").style.display = "block";
-  
 
-  
   document.getElementById("itemCategory").value = catogary;
   console.log("imageeeee", uploadedImage);
   const myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
