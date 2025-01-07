@@ -273,31 +273,68 @@ let orderData = [
 
 
 
+// export function fetchOrders() {
+//   readOrdersFromStorage();
+//   return orderData;
+// }
+
+// function readOrdersFromStorage() {
+//   const orderJSON = localStorage.getItem("orderData");
+//   if (orderJSON) {
+//     return JSON.parse(orderJSON);
+//   }
+//   return orderData;
+// }
+
+// export function addOrder(prderObj) {
+//   orderData.push(prderObj);
+//   saveOrdersToStorage();
+//   console.log(orderData);
+// }
+
+// export function removeOrder(index) {
+//   orderData.splice(index, 1);
+//   saveOrdersToStorage();
+//   console.log(orderData);
+// }
+
+// function saveOrdersToStorage() {
+//   localStorage.setItem("orderData", JSON.stringify(orderData));
+// }
+
+
+
+// let orderData = []; // Initialize orderData as an empty array
+
 export function fetchOrders() {
-  readOrdersFromStorage();
-  return orderData;
+  return readOrdersFromStorage(); // Always return the latest data
 }
 
 function readOrdersFromStorage() {
   const orderJSON = localStorage.getItem("orderData");
   if (orderJSON) {
-    return JSON.parse(orderJSON);
+    orderData = JSON.parse(orderJSON); // Update the in-memory array
+    return orderData;
   }
-  return orderData;
+  return orderData || []; // Default to an empty array if no data exists
 }
 
-export function addOrder(prderObj) {
-  orderData.push(prderObj);
-  saveOrdersToStorage();
-  console.log(orderData);
+export function addOrder(orderObj) {
+  orderData.push(orderObj); // Add the new order to the in-memory array
+  saveOrdersToStorage(); // Save the updated array to localStorage
+  console.log("Order added:", orderData);
 }
 
 export function removeOrder(index) {
-  orderData.splice(index, 1);
-  saveOrdersToStorage();
-  console.log(orderData);
+  if (index >= 0 && index < orderData.length) {
+    orderData.splice(index, 1); // Remove the order at the specified index
+    saveOrdersToStorage(); // Save the updated array to localStorage
+    console.log("Order removed:", orderData);
+  } else {
+    console.error("Invalid index:", index);
+  }
 }
 
 function saveOrdersToStorage() {
-  localStorage.setItem("orderData", JSON.stringify(orderData));
+  localStorage.setItem("orderData", JSON.stringify(orderData)); // Save all orders to localStorage
 }

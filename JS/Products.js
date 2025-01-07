@@ -240,7 +240,7 @@ function updateProduct(newProduct, index, catogary) {
 
   productTile.innerHTML = `
 
-<div class="card card-custom"  >
+<div class="card card-custom" >
         <div class="imgDiv">
             <img src="${newProduct.img}" class="card-img-top"
                 alt="${newProduct.name}" cap">

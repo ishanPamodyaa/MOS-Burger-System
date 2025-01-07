@@ -11,7 +11,7 @@ import {
 } from "./productDataManage.js";
 
 import { fetchOrders, addOrder, removeOrder } from "./orderDataManage.js";
-
+import { addnewOrdersToList } from "./orders.js";
 let uploadedImage = "";
 const product = fetchProducts();
 console.log("Product data:", product);
@@ -22,19 +22,22 @@ let cartData = [];
 let orderArray = [];
 let discount = 0;
 let amount = 0;
-let currentOrderID = 11;
+// let currentOrderID = 7;
+let lastOrderId = fetchOrders().length
 
 window.onload = function () {
+  console.log("last OID",lastOrderId);
+  updateOrderID();
   displayProductList(selectedCatogary);
 };
 
 function getNextID() {
-  return "O#" + currentOrderID.toString().padStart(3, "0");
+  return "O#" + lastOrderId.toString().padStart(3, "0");
 }
 
 function updateOrderID() {
   const orderIDElement = document.getElementById("orderId");
-  currentOrderID++;
+  lastOrderId++;
 
   orderIDElement.textContent = getNextID();
   console.log("Order ID updated:", orderIDElement.textContent);
@@ -70,11 +73,9 @@ document
   .addEventListener("click", displayProductList.bind(null, "Beverages"));
 
 function displayProductList(catogary) {
-
   selectedCatogary = catogary;
 
   console.log("Selected catogary:", selectedCatogary, catogary);
-
 
   const dynamicProductTile = document.getElementById("productTile");
   dynamicProductTile.innerHTML = "";
@@ -156,7 +157,6 @@ document
   .addEventListener("click", function (event) {
     const clickedCard = event.target.closest("#clickableCard");
     const index = clickedCard.getAttribute("data-index");
-  
 
     let productEnabled = checkProductEnabled(index);
 
@@ -170,7 +170,6 @@ document
   });
 
 function addToCart(catogary, index) {
-
   let productPotitionInCart = cartData.findIndex(
     (cartItem) =>
       cartItem.item.itemCode === product[selectedCatogary][index].itemCode
@@ -211,7 +210,6 @@ function addCartToHtml(catogary, index) {
   if (cartData.length > 0) {
     cartData.forEach((item, index) => {
       let produuctItem = cartData[index].item;
-     
 
       const cartItem = document.createElement("div");
       cartItem.classList.add(
@@ -264,7 +262,7 @@ function addCartToHtml(catogary, index) {
           </div>
         `;
       dynamicCartItem.appendChild(cartItem);
-   
+
       priceItems = priceItems + produuctItem.price * item.quantity;
       discountItems =
         discountItems +
@@ -356,7 +354,6 @@ function searchCustomer() {
 
   // orderArray.push({ customer: customer });
 
-
   return customer;
 }
 
@@ -402,8 +399,10 @@ function placeOrder() {
   };
 
   addOrder(newOrder);
+  const orders = fetchOrders();
 
   console.log("newOrder", newOrder);
+  console.log("Order", orders);
 
   addCartToHtml();
   updateOrderID();
@@ -530,7 +529,6 @@ function placeOrder() {
 
   // Add order items to the table
   newOrder.items.forEach((item) => {
-
     if (item.quantity > 0) {
       const itemPrice = Number(item.item.price) || 0;
 
@@ -554,7 +552,56 @@ function placeOrder() {
   // Generate the PDF
   const pdfName = orderId + ".pdf";
   pdfMake.createPdf(docDefinition).download(pdfName);
+
+  addnewOrdersToList(newOrder);
 }
+//  function addnewOrdersToList(newOrder) {
+//   const order = newOrder;
+
+//   const dyanamicOrderTile = document.getElementById("orderTile");
+
+//   dyanamicOrderTile.innerHTML = "";
+
+ 
+//     const orderTile = document.createElement("div");
+//     orderTile.classList.add("row");
+//     orderTile.innerHTML = `
+//                     <div class="text-center">
+//                         <div class="col-lg-12 col-md-12 col-sm-12 b-example-divider "></div>
+//                     </div>
+//                     <div class="col-lg-2 col-md-2 col-sm-2 text-center text-warning">
+//                         <p>${order.orderId}</p>
+//                     </div>
+//                     <div class="col-lg-2 col-md-2 col-sm-2 text-center text-warning">
+//                         <p>${order.orderDate}</p>
+//                     </div>
+//                     <div class="col-lg-2 col-md-2 col-sm-2 text-center text-warning">
+//                         <p>${
+//                           order.customer[0].fName +
+//                           " " +
+//                           order.customer[0].lName
+//                         }</p>
+//                     </div>
+//                     <div class="col-lg-2 col-md-2 col-sm-2 text-center text-warning">
+//                         <p>${order.customer[0].primaryContact}</p>
+//                     </div>
+//                     <div class="col-lg-2 col-md-2 col-sm-2 text-center text-warning">
+//                         <p>LKR  ${order.total}</p>
+//                     </div>
+//                     <div
+//                         class="d-flex flex-row justify-content-center align-items-center col-lg-2 col-md-2 col-sm-2 text-warning gap-2">
+//                         <a href="">
+//                             <p class="">View</p>
+//                         </a>
+//                         <!-- <img src="../image/icon/doc.png" class="align-items-lg-center" width="30px"> -->
+//                     </div>
+
+//     `;
+
+//     dyanamicOrderTile.appendChild(orderTile);
+  
+// }
+
 
 document.getElementById("canselBtn").addEventListener("click", () => {
   clearOrder();
@@ -587,5 +634,4 @@ function resetTotals() {
   if (subTotalElement) subTotalElement.innerHTML = "LKR 0.00";
   if (discountElement) discountElement.innerHTML = "LKR 0.00";
   if (amountElement) amountElement.innerHTML = "<h4>LKR 0.00</h4>";
-
 }

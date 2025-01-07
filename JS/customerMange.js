@@ -281,32 +281,68 @@ let customerData = [
   },
 ];
 
+// export function fetchCustomers() {
+//   readCustomersFromStorage();
+//   return customerData;
+// }
+
+// function readCustomersFromStorage() {
+//   const customerJSON = localStorage.getItem("customerData");
+//   if (customerJSON) {
+//     return JSON.parse(customerJSON);
+//   }
+//   return customerData;
+// }
+
+// export function addCustomer(customerObj) {
+//   customerData.push(customerObj);
+//   saveCustomersToStorage();
+//   console.log(customerData);
+// }
+
+// export function removeCustomer(index) {
+// //   console.log("remove ekata awa", index, gender);
+//   customerData.splice(index, 1);
+//   saveCustomersToStorage();
+//   console.log("remove", customerData);
+// }
+
+// function saveCustomersToStorage() {
+//   localStorage.setItem("customerData", JSON.stringify(customerData));
+// }
+
+
+// let customerData = []; // Initialize customerData as an empty array
+
 export function fetchCustomers() {
-  readCustomersFromStorage();
-  return customerData;
+  return readCustomersFromStorage(); // Always return the latest data
 }
 
 function readCustomersFromStorage() {
   const customerJSON = localStorage.getItem("customerData");
   if (customerJSON) {
-    return JSON.parse(customerJSON);
+    customerData = JSON.parse(customerJSON); // Update the in-memory array
+    return customerData;
   }
-  return customerData;
+  return customerData || []; // Default to an empty array if no data exists
 }
 
 export function addCustomer(customerObj) {
-  customerData.push(customerObj);
-  saveCustomersToStorage();
-  console.log(customerData);
+  customerData.push(customerObj); // Add the new customer to the in-memory array
+  saveCustomersToStorage(); // Save the updated array to localStorage
+  console.log("Customer added:", customerData);
 }
 
 export function removeCustomer(index) {
-//   console.log("remove ekata awa", index, gender);
-  customerData.splice(index, 1);
-  saveCustomersToStorage();
-  console.log("remove", customerData);
+  if (index >= 0 && index < customerData.length) {
+    customerData.splice(index, 1); // Remove the customer at the specified index
+    saveCustomersToStorage(); // Save the updated array to localStorage
+    console.log("Customer removed:", customerData);
+  } else {
+    console.error("Invalid index:", index);
+  }
 }
 
 function saveCustomersToStorage() {
-  localStorage.setItem("customerData", JSON.stringify(customerData));
+  localStorage.setItem("customerData", JSON.stringify(customerData)); // Save all customers to localStorage
 }
